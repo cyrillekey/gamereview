@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
-class SingleGame extends StatelessWidget {
+class SingleGame extends StatefulWidget {
   const SingleGame({Key? key}) : super(key: key);
 
+  @override
+  State<SingleGame> createState() => _SingleGameState();
+}
+
+double reviewvalue = 1;
+
+class _SingleGameState extends State<SingleGame> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,14 +132,94 @@ class SingleGame extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.1,
                       child: Row(
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.black,
-                          )
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: 20),
+                            child: Center(
+                              child: CircleAvatar(
+                                backgroundColor: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(width: 200, child: Text("John Doe")),
+                              Container(
+                                  width: 200, child: Text("User Rating: 4.5")),
+                              Container(
+                                  width: 200,
+                                  child: Text("Date Posted: 12/3/16"))
+                            ],
+                          ),
+                          Text("u/A"),
                         ],
                       ),
                     ),
                   );
                 }).toList(),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: Text(
+                  "Leave Review",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                      labelText: "Review",
+                      hintText: "Leave Review",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black))),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Slider(
+                  divisions: 5,
+                  value: reviewvalue,
+                  max: 5,
+                  min: 1,
+                  label: "${reviewvalue.toInt()}/5",
+                  onChanged: (value) {
+                    setState(() {
+                      reviewvalue = value;
+                    });
+                  }),
+              SizedBox(
+                height: 10,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Submit",
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.pink),
+                    fixedSize: MaterialStateProperty.all<Size>(Size(180, 60))),
+              ),
+              SizedBox(
+                height: 10,
               )
             ],
           ),

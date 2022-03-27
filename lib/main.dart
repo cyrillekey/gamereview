@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamereview/screens/home_page.dart';
+import 'package:gamereview/screens/log_in.dart';
 
 void main() {
   runApp(const MyApp());
