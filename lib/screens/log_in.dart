@@ -1,8 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:gamereview/screens/sing_in.dart';
+import 'dart:convert';
 
-class LoginScreen extends StatelessWidget {
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:gamereview/models/user.dart';
+import 'package:gamereview/screens/home_page.dart';
+import 'package:gamereview/screens/sing_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  bool pressed = false;
+  @override
+  void dispose() {
+    pressed = false;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +48,7 @@ class LoginScreen extends StatelessWidget {
                 height: 80,
               ),
               TextFormField(
+                controller: username,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     label: Text("Username"),
@@ -42,6 +63,7 @@ class LoginScreen extends StatelessWidget {
                 height: 30,
               ),
               TextFormField(
+                controller: password,
                 keyboardType: TextInputType.text,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -57,11 +79,22 @@ class LoginScreen extends StatelessWidget {
                 height: 60,
               ),
               TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: Colors.white),
-                ),
+                onPressed: !pressed
+                    ? () {
+                        setState(() {
+                          pressed = !pressed;
+                        });
+                        login();
+                      }
+                    : null,
+                child: !pressed
+                    ? Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white),
+                      )
+                    : CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
                 style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.pink),
@@ -89,5 +122,44 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void login() async {
+    try {
+      final dio = Dio();
+      dio
+          .get(
+        "https://scaletoday-heliumharbor-8080.codio-box.uk/loginUser/${username.text}/${password.text}",
+      )
+          .then((value) {
+        if (value.statusCode == 200) {
+          User user = User.fromJson(value.data);
+          saveUser(jsonEncode(user.toJson()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        } else {}
+      });
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text("An error occured please try again"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Exit"))
+                ],
+              ));
+    }
+    setState(() {
+      pressed = !pressed;
+    });
+  }
+
+  Future saveUser(String user) async {
+    SharedPreferences myPrefs = await SharedPreferences.getInstance();
+    myPrefs.setString("user", user);
   }
 }

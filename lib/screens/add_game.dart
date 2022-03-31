@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:gamereview/models/user.dart';
+import 'package:gamereview/screens/home_page.dart';
 
 class AddGame extends StatefulWidget {
-  AddGame({Key? key}) : super(key: key);
+  final User user;
+  AddGame({Key? key, required this.user}) : super(key: key);
 
   @override
   State<AddGame> createState() => _AddGameState();
@@ -13,7 +17,10 @@ class AddGame extends StatefulWidget {
 class _AddGameState extends State<AddGame> {
   double year = 1970.00;
   FilePickerResult? result;
-
+  TextEditingController name = TextEditingController();
+  TextEditingController publisher = TextEditingController();
+  TextEditingController review = TextEditingController();
+  bool pressed = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +60,7 @@ class _AddGameState extends State<AddGame> {
                 height: 30,
               ),
               TextFormField(
+                controller: name,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     label: Text("Game Name"),
@@ -67,6 +75,7 @@ class _AddGameState extends State<AddGame> {
                 height: 20,
               ),
               TextFormField(
+                controller: publisher,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                     label: Text("Publisher"),
@@ -81,11 +90,12 @@ class _AddGameState extends State<AddGame> {
                 height: 20,
               ),
               TextFormField(
+                controller: review,
                 maxLines: 8,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                    label: Text("Publisher"),
-                    hintText: 'Enter Publisher Name',
+                    label: Text("Description"),
+                    hintText: 'Description',
                     border: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                     ),
@@ -116,10 +126,54 @@ class _AddGameState extends State<AddGame> {
               SizedBox(
                 height: 20,
               ),
+              TextButton.icon(
+                  style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all<Size>(Size(180, 60)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.red)),
+                  onPressed: () {
+                    setState(() {
+                      pressed = !pressed;
+                    });
+                    print(widget.user.user_id);
+                    // saveGame();
+                  },
+                  icon: Icon(
+                    Icons.save,
+                    color: Colors.white,
+                  ),
+                  label: !pressed
+                      ? Text(
+                          "Save Game",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      : CircularProgressIndicator(
+                          color: Colors.white,
+                        ))
             ],
           )),
         ),
       ),
     );
+  }
+
+  Future<void> saveGame() async {
+    final dio = Dio();
+    await dio
+        .get(
+            "https://scaletoday-heliumharbor-8080.codio-box.uk/${widget.user.user_id}/${name.text}/${publisher.text}/4.5/${review.text}/$year/hrrr")
+        .then((value) {
+      if (value.statusCode == 200) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      } else {
+        pressed = !pressed;
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Error"),
+                ));
+      }
+    });
   }
 }
