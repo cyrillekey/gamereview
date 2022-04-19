@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamereview/screens/home.dart';
 import 'package:gamereview/screens/home_page.dart';
 import 'package:gamereview/services/service_locator.dart';
 import 'package:slide_drawer/slide_drawer.dart';
@@ -16,23 +17,22 @@ class _ToggleScrrenState extends State<ToggleScrren> {
   @override
   void initState() {
     super.initState();
-    _screens = [HomePage()];
+    _screens = [Home()];
   }
 
   @override
   Widget build(BuildContext context) {
+    SlideDrawer.of(context)?.close();
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,
         title: Text("Home"),
         leading: IconButton(
           icon: Icon(Icons.menu),
-          onPressed: () {
-            SlideDrawer.of(context)?.open();
-          },
+          onPressed: () => SlideDrawer.of(context)!.open(),
         ),
       ),
-      body: _screens[widget.index],
+      body: Container(height: double.infinity, child: _screens[widget.index]),
     );
   }
 }

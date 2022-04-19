@@ -14,8 +14,6 @@ class HomeProvider with ChangeNotifier {
   loadItems() {
     getPopular();
     getGames();
-    isLoading = false;
-    notifyListeners();
   }
 
   final _apiClient = locator<ApiClient>();
@@ -24,6 +22,8 @@ class HomeProvider with ChangeNotifier {
         'https://api.rawg.io/api/games?key=674f1105f61c4d639627a88e417f7a91&ordering=released');
     final result = respose.response['results'];
     games = result.map<Game>((json) => Game.fromJson(json)).toList();
+    isLoading = false;
+    notifyListeners();
   }
 
   Future<List<Game>?> getPopular() async {
@@ -31,6 +31,8 @@ class HomeProvider with ChangeNotifier {
         'https://api.rawg.io/api/games?key=674f1105f61c4d639627a88e417f7a91&ordering=-rating');
     final result = respose.response['results'];
     popular = result.map<Game>((json) => Game.fromJson(json)).toList();
-    carousel = popular.sublist(0, 6);
+    carousel = popular.sublist(2, 6);
+    isLoading = false;
+    notifyListeners();
   }
 }
