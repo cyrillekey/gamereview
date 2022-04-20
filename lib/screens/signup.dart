@@ -1,22 +1,34 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
-
 import 'package:flutter_signin_button/button_builder.dart';
-
 import 'package:gamereview/controllers/auth_provider.dart';
-import 'package:gamereview/screens/home_page.dart';
-import 'package:gamereview/screens/signup.dart';
+import 'package:gamereview/screens/emailverify.dart';
 
-import 'package:gamereview/services/service_locator.dart';
+import 'package:gamereview/screens/home_page.dart';
+import 'package:gamereview/screens/sing_in.dart';
 import 'package:gamereview/utils/images.dart';
-import 'package:gamereview/widgets/Alerts.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+import '../widgets/Alerts.dart';
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+  bool pressed = false;
+  @override
+  void dispose() {
+    pressed = false;
+    super.dispose();
+  }
+
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -43,21 +55,21 @@ class LoginScreen extends StatelessWidget {
                   width: width,
                   height: height * 0.25,
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage(Images.login_picture)))),
+                      image:
+                          DecorationImage(image: AssetImage(Images.singup)))),
               SizedBox(
                 height: height * 0.01,
               ),
               Center(
                 child: Text(
-                  "Welcome back!",
+                  "Signup",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               ),
               SizedBox(height: height * 0.005),
               Center(
                   child: Text(
-                "Login to your existing account",
+                "Create an account to begin",
                 style: TextStyle(fontSize: 16, color: Colors.grey[400]),
               )),
               SizedBox(
@@ -134,57 +146,68 @@ class LoginScreen extends StatelessWidget {
                                     color: Colors.lightBlue, width: 4),
                                 borderRadius: BorderRadius.circular(40))),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                            style: ButtonStyle(
-                                overlayColor: MaterialStateProperty.all(
-                                    Colors.transparent)),
-                            onPressed: () {},
-                            child: Text(
-                              "Forgot password?",
-                              style: TextStyle(color: Colors.grey),
-                            )),
-                      ),
                       SizedBox(
-                        height: height * 0.01,
+                        height: height * 0.06,
                       ),
                       Center(
                         child: TextButton(
-                          onPressed: () async {
-                            if (formKey.currentState!.validate()) {
-                              Alerts.showProgressDialog(context, "Loading");
-                              try {
-                                String? uid = await authProvider.loginUser(
-                                    emailController.text.trim(),
-                                    passwordController.text.trim());
-                                if (uid != null) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomePage()));
-                                }
-                              } on FirebaseAuthException catch (e) {
-                                Navigator.pop(context);
-                                Alerts.show(context, "Error", e.message!);
-                              } catch (e) {
-                                Navigator.pop(context);
-                                Alerts.show(context, "Error",
-                                    "An error occured try again");
-                              }
-                            }
-                          },
-                          child: Text(
-                            "Sign In",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
+                          onPressed: pressed
+                              ? null
+                              : () async {
+                                  if (formKey.currentState!.validate()) {
+                                    setState(() {
+                                      pressed = !pressed;
+                                    });
+
+                                    try {
+                                      User? uid = await authProvider.signupUser(
+                                          emailController.text.trim(),
+                                          passwordController.text.trim());
+                                      if (uid != null && uid.emailVerified) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage()));
+                                      } else if (uid != null &&
+                                          !uid.emailVerified) {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EmailVerify(
+                                                      user: uid,
+                                                    )));
+                                      }
+                                    } on FirebaseAuthException catch (e) {
+                                      setState(() {
+                                        pressed = !pressed;
+                                      });
+                                      Alerts.show(context, "Error", e.message!);
+                                    } catch (e) {
+                                      setState(() {
+                                        pressed = !pressed;
+                                      });
+                                      Alerts.show(context, "Error",
+                                          "An error occured try again");
+                                    }
+                                  }
+                                },
+                          child: pressed
+                              ? CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
                           style: ButtonStyle(
                               shape: MaterialStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20))),
-                              fixedSize: MaterialStateProperty.all(Size(
-                                  MediaQuery.of(context).size.width * 0.5,
-                                  height * 0.06)),
+                              fixedSize: MaterialStateProperty.all(
+                                  Size(width * 0.5, height * 0.07)),
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.blue[900]!)),
                         ),
@@ -213,8 +236,14 @@ class LoginScreen extends StatelessWidget {
                             textColor: Colors.white,
                             width: 150,
                             height: 40,
-                            onPressed: () {
-                              authProvider.siginWithGoogle();
+                            onPressed: () async {
+                              User? user = await authProvider.siginWithGoogle();
+                              if (user != null && user.emailVerified) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage()));
+                              }
                             },
                           ),
                           SignInButtonBuilder(
@@ -238,10 +267,10 @@ class LoginScreen extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SignUpScreen()));
+                                      builder: (context) => LoginScreen()));
                             },
                             child: Text(
-                              "Dont Have an account?",
+                              "Already Have an account ?",
                               style: TextStyle(),
                             )),
                       ),

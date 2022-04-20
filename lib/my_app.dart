@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gamereview/screens/welcome.dart';
 import 'package:gamereview/screens/home_page.dart';
+import 'package:gamereview/screens/sing_in.dart';
 
 import 'screens/toggle_screens.dart';
 
@@ -29,6 +31,6 @@ class _MyAppState extends State<MyApp> {
           // is not restarted.
           primarySwatch: Colors.pink,
         ),
-        home: HomePage());
+        home: WelcomePage());
   }
 }

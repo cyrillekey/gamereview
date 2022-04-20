@@ -70,27 +70,33 @@ class _HomeState extends State<Home> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: [
-                                            Text(
-                                              item.name.toString(),
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.bold),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Text(
+                                                item.name.toString(),
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 30,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                             ),
                                             Container(
-                                              width: 200,
+                                              alignment: Alignment.centerLeft,
                                               margin: EdgeInsets.only(
-                                                  top: 5, left: 20),
+                                                top: 5,
+                                              ),
                                               child: Text(
                                                 "Released ${item.released}",
                                                 style: TextStyle(
-                                                    color: Colors.white),
+                                                    color: Colors.white,
+                                                    fontSize: 16),
                                               ),
                                             ),
                                             SizedBox(height: 10),
                                             Container(
-                                              width: 200,
-                                              margin: EdgeInsets.only(left: 20),
                                               child: Row(
                                                 children: [
                                                   RatingBarIndicator(
@@ -129,7 +135,7 @@ class _HomeState extends State<Home> {
                                 });
                               }).toList(),
                               options: CarouselOptions(
-                                  autoPlay: true,
+                                  autoPlay: false,
                                   viewportFraction: 1,
                                   height: MediaQuery.of(context).size.height *
                                       0.35)),
