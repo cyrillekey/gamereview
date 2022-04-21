@@ -40,12 +40,13 @@ class ApiClient {
 
   Future<ApiRespose> get(String uri, {data}) async {
     try {
-      logger.d(uri);
       var response = await dio.get(uri);
       if (response.statusCode == 200) {
+        logger.d(response.statusMessage);
         return ApiRespose(true, response.statusMessage,
             response: response.data);
       } else {
+        logger.e(response.statusCode);
         return ApiRespose(false, response.statusMessage);
       }
     } catch (e) {

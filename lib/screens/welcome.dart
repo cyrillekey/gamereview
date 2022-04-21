@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gamereview/screens/signup.dart';
-import 'package:gamereview/screens/sing_in.dart';
+
+import 'package:gamereview/screens/login.dart';
 import 'package:gamereview/utils/images.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -68,8 +69,8 @@ class WelcomePage extends StatelessWidget {
             height: size * 0.06,
             child: TextButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Login()));
               },
               child: Text(
                 "Sign in",

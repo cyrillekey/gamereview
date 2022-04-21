@@ -58,9 +58,12 @@ dependencies:
   firebase_crashlytics: ^2.6.1
   flutter_signin_button: 
   google_sign_in: ^5.2.0
-  flutter_login_facebook: ^1.4.1
   flutter_font_icons: ^2.2.4
   carousel_indicator: ^1.0.6
+  flutter_facebook_auth: ^4.3.0
+  flutter_native_splash: ^2.1.6
+  twitter_login: ^4.2.2
+  
   
 dev_dependencies:
   flutter_test:

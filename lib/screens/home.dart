@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -17,6 +18,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool show = true;
+  int index = 0;
   @override
   void initState() {
     super.initState();
@@ -25,7 +27,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    logger.e(Provider.of<HomeProvider>(context, listen: false).games);
     return Scaffold(
       floatingActionButton: show
           ? FloatingActionButton.extended(
@@ -43,11 +44,42 @@ class _HomeState extends State<Home> {
                         enabled: true,
                         child: Column(
                           children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.30,
-                              decoration: BoxDecoration(color: Colors.grey),
-                            )
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.07,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.30,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                            Center(
+                              child: CarouselIndicator(
+                                count: 4,
+                                color: Colors.grey,
+                                index: 0,
+                                activeColor: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
                           ],
                         ),
                         baseColor: Colors.grey[400]!,
@@ -57,6 +89,28 @@ class _HomeState extends State<Home> {
                     child: Column(
                       children: [
                         SizedBox(
+                          height: 4,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  "Game Review",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.redAccent),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8),
                           child: CarouselSlider(
                               items: provider.carousel.map((item) {
                                 return Builder(builder: (BuildContext context) {
@@ -127,6 +181,7 @@ class _HomeState extends State<Home> {
                                       ),
                                     ),
                                     decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                             image: CachedNetworkImageProvider(
                                                 item.background_image),
@@ -135,14 +190,23 @@ class _HomeState extends State<Home> {
                                 });
                               }).toList(),
                               options: CarouselOptions(
+                                  onPageChanged: (x, y) {
+                                    setState(() {
+                                      index = x;
+                                    });
+                                  },
                                   autoPlay: false,
                                   viewportFraction: 1,
                                   height: MediaQuery.of(context).size.height *
-                                      0.35)),
+                                      0.30)),
                         ),
                         SizedBox(
                           height: 10,
                         ),
+                        CarouselIndicator(
+                            color: Colors.black,
+                            count: provider.carousel.length,
+                            index: index),
                         Padding(
                           padding: EdgeInsets.all(12),
                           child: Row(

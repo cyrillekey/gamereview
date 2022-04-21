@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gamereview/controllers/auth_provider.dart';
+import 'package:gamereview/screens/home_page.dart';
 import 'package:gamereview/utils/images.dart';
+import 'package:gamereview/widgets/alerts.dart';
 import 'package:provider/provider.dart';
 
 class EmailVerify extends StatefulWidget {
@@ -14,6 +18,21 @@ class EmailVerify extends StatefulWidget {
 
 class _EmailVerifyState extends State<EmailVerify> {
   bool pressed = false;
+  int count = 60;
+  late Timer _timer;
+  @override
+  void initState() {
+    super.initState();
+    countDown();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    pressed = false;
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -54,11 +73,38 @@ class _EmailVerifyState extends State<EmailVerify> {
                   width: width * 0.8,
                   height: height * 0.07,
                   child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        pressed = !pressed;
-                      });
-                    },
+                    onPressed: !pressed
+                        ? () async {
+                            setState(() {
+                              pressed = !pressed;
+                            });
+                            _timer.cancel();
+                            try {
+                              bool verified = await provider.verifyEmail();
+                              if (verified) {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage()),
+                                    (route) => false);
+                              } else {
+                                setState(() {
+                                  pressed = !pressed;
+                                });
+                                Alerts.showSnackBar(
+                                    context, "Error! Email verification failed",
+                                    isError: true);
+                              }
+                            } catch (e) {
+                              setState(() {
+                                pressed = !pressed;
+                              });
+                              Alerts.showSnackBar(context,
+                                  "Something went wrong please try again",
+                                  isError: true);
+                            }
+                          }
+                        : null,
                     child: pressed
                         ? CircularProgressIndicator(
                             color: Colors.white,
@@ -83,9 +129,25 @@ class _EmailVerifyState extends State<EmailVerify> {
                       style: ButtonStyle(
                           overlayColor:
                               MaterialStateProperty.all(Colors.transparent)),
-                      onPressed: () {},
+                      onPressed: count == 0
+                          ? () async {
+                              countDown();
+                              var sent =
+                                  await provider.resendEmailVerification();
+                              if (sent) {
+                                Alerts.showSnackBar(
+                                  context,
+                                  "Email sent, check inbox to verify",
+                                );
+                              } else {
+                                Alerts.showSnackBar(context,
+                                    "Something went wrong please try again",
+                                    isError: true);
+                              }
+                            }
+                          : null,
                       child: Text(
-                        "Resend Verification email",
+                        "Resend Verification email (${count})s",
                         style: TextStyle(color: Colors.black),
                       )),
                 ),
@@ -95,5 +157,18 @@ class _EmailVerifyState extends State<EmailVerify> {
         );
       }),
     );
+  }
+
+  void countDown() {
+    count = 60;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (count > 0) {
+        setState(() {
+          count--;
+        });
+      } else {
+        _timer.cancel();
+      }
+    });
   }
 }

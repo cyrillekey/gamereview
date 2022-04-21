@@ -1,40 +1,42 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, must_be_immutable
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
-import 'package:flutter_signin_button/button_builder.dart';
-import 'package:flutter_signin_button/button_view.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:gamereview/controllers/auth_provider.dart';
 import 'package:gamereview/screens/emailverify.dart';
-
 import 'package:gamereview/screens/home_page.dart';
-import 'package:gamereview/screens/login.dart';
-
+import 'package:gamereview/screens/signup.dart';
+import 'package:gamereview/services/service_locator.dart';
+import 'package:gamereview/utils/clip_painter.dart';
 import 'package:gamereview/utils/images.dart';
+import 'package:gamereview/widgets/alerts.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/Alerts.dart';
-
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  Login({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
+class _LoginState extends State<Login> {
   bool busy = false;
+
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
   @override
   void dispose() {
-    super.dispose();
+    passwordController.dispose();
+    emailController.dispose();
     busy = false;
+    super.dispose();
   }
 
-  final formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -57,7 +59,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     RichText(
                       text: const TextSpan(
-                          text: 'Get started',
+                          text: 'Welcome Back',
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w700,
@@ -68,14 +70,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: height * 0.01,
                     ),
                     const Text(
-                      "Create an account to get started",
+                      "Login to your existing account",
                       style: TextStyle(fontSize: 16),
                     ),
                     const SizedBox(
                       height: 50,
                     ),
                     Form(
-                      key: formKey,
+                      key: _formKey,
                       child: Column(
                         children: [
                           Container(
@@ -144,12 +146,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     InkWell(
                       onTap: !busy
                           ? () async {
-                              if (formKey.currentState!.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 setState(() {
                                   busy = !busy;
                                 });
                                 try {
-                                  User? uid = await authProvider.signupUser(
+                                  User? uid = await authProvider.loginUser(
                                       emailController.text.trim(),
                                       passwordController.text.trim());
                                   if (uid != null && uid.emailVerified) {
@@ -189,7 +191,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: Colors.white,
                               )
                             : const Text(
-                                "Sign Up",
+                                "Login",
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600,
@@ -213,6 +215,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   Color(0xfffbb448),
                                   Color(0xfff7892b)
                                 ])),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      alignment: Alignment.centerRight,
+                      child: const Text(
+                        'Forgot password ?',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500),
                       ),
                     ),
                     Container(
@@ -299,18 +310,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     }),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen()));
                       },
                       child: Container(
-                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        margin: const EdgeInsets.symmetric(vertical: 8),
                         padding: const EdgeInsets.all(15),
                         alignment: Alignment.bottomCenter,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
                             Text(
-                              'Already Have an account ?',
+                              'Don\'t have an account ?',
                               style: TextStyle(
                                   fontSize: 13, fontWeight: FontWeight.w600),
                             ),
@@ -318,7 +331,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               width: 10,
                             ),
                             Text(
-                              'Login',
+                              'Register',
                               style: TextStyle(
                                   color: Color(0xfff79c4f),
                                   fontSize: 13,
@@ -327,7 +340,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

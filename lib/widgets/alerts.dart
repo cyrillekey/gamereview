@@ -49,4 +49,29 @@ class Alerts {
       backgroundColor: isError ? Colors.red : Colors.green,
     ));
   }
+
+  static showOptionDialog(
+      BuildContext context, String title, String content, VoidCallback onYes,
+      {String buttonText = "Yes"}) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "No",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              TextButton(onPressed: onYes, child: Text(buttonText))
+            ],
+          );
+        });
+  }
 }
