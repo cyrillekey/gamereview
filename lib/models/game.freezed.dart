@@ -1,6 +1,5 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'game.dart';
@@ -12,11 +11,50 @@ part of 'game.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Game _$GameFromJson(Map<String, dynamic> json) {
   return _Game.fromJson(json);
 }
+
+/// @nodoc
+class _$GameTearOff {
+  const _$GameTearOff();
+
+  _Game call(
+      {@JsonKey(name: "id") int id = 0,
+      @JsonKey(name: "slug") String slug = "",
+      @JsonKey(name: "name") String name = " ",
+      @JsonKey(name: "released") String released = " ",
+      @JsonKey(name: "background_image") String background_image = " ",
+      @JsonKey(name: "rating") double rating = 0.0,
+      @JsonKey(name: "rating_top") int rating_top = 5,
+      @JsonKey(name: "ratings") List<Rating> ratings = const [],
+      @JsonKey(name: "metacritic") int metacritic = 0,
+      @JsonKey(name: "reviews_count") int reviews_count = 0,
+      @JsonKey(name: "genres") List<Genre> genres = const []}) {
+    return _Game(
+      id: id,
+      slug: slug,
+      name: name,
+      released: released,
+      background_image: background_image,
+      rating: rating,
+      rating_top: rating_top,
+      ratings: ratings,
+      metacritic: metacritic,
+      reviews_count: reviews_count,
+      genres: genres,
+    );
+  }
+
+  Game fromJson(Map<String, Object?> json) {
+    return Game.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $Game = _$GameTearOff();
 
 /// @nodoc
 mixin _$Game {
@@ -40,6 +78,8 @@ mixin _$Game {
   int get metacritic => throw _privateConstructorUsedError;
   @JsonKey(name: "reviews_count")
   int get reviews_count => throw _privateConstructorUsedError;
+  @JsonKey(name: "genres")
+  List<Genre> get genres => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -60,7 +100,8 @@ abstract class $GameCopyWith<$Res> {
       @JsonKey(name: "rating_top") int rating_top,
       @JsonKey(name: "ratings") List<Rating> ratings,
       @JsonKey(name: "metacritic") int metacritic,
-      @JsonKey(name: "reviews_count") int reviews_count});
+      @JsonKey(name: "reviews_count") int reviews_count,
+      @JsonKey(name: "genres") List<Genre> genres});
 }
 
 /// @nodoc
@@ -83,6 +124,7 @@ class _$GameCopyWithImpl<$Res> implements $GameCopyWith<$Res> {
     Object? ratings = freezed,
     Object? metacritic = freezed,
     Object? reviews_count = freezed,
+    Object? genres = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -125,6 +167,10 @@ class _$GameCopyWithImpl<$Res> implements $GameCopyWith<$Res> {
           ? _value.reviews_count
           : reviews_count // ignore: cast_nullable_to_non_nullable
               as int,
+      genres: genres == freezed
+          ? _value.genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<Genre>,
     ));
   }
 }
@@ -144,7 +190,8 @@ abstract class _$GameCopyWith<$Res> implements $GameCopyWith<$Res> {
       @JsonKey(name: "rating_top") int rating_top,
       @JsonKey(name: "ratings") List<Rating> ratings,
       @JsonKey(name: "metacritic") int metacritic,
-      @JsonKey(name: "reviews_count") int reviews_count});
+      @JsonKey(name: "reviews_count") int reviews_count,
+      @JsonKey(name: "genres") List<Genre> genres});
 }
 
 /// @nodoc
@@ -168,6 +215,7 @@ class __$GameCopyWithImpl<$Res> extends _$GameCopyWithImpl<$Res>
     Object? ratings = freezed,
     Object? metacritic = freezed,
     Object? reviews_count = freezed,
+    Object? genres = freezed,
   }) {
     return _then(_Game(
       id: id == freezed
@@ -210,6 +258,10 @@ class __$GameCopyWithImpl<$Res> extends _$GameCopyWithImpl<$Res>
           ? _value.reviews_count
           : reviews_count // ignore: cast_nullable_to_non_nullable
               as int,
+      genres: genres == freezed
+          ? _value.genres
+          : genres // ignore: cast_nullable_to_non_nullable
+              as List<Genre>,
     ));
   }
 }
@@ -225,10 +277,10 @@ class _$_Game implements _Game {
       @JsonKey(name: "background_image") this.background_image = " ",
       @JsonKey(name: "rating") this.rating = 0.0,
       @JsonKey(name: "rating_top") this.rating_top = 5,
-      @JsonKey(name: "ratings") final List<Rating> ratings = const [],
+      @JsonKey(name: "ratings") this.ratings = const [],
       @JsonKey(name: "metacritic") this.metacritic = 0,
-      @JsonKey(name: "reviews_count") this.reviews_count = 0})
-      : _ratings = ratings;
+      @JsonKey(name: "reviews_count") this.reviews_count = 0,
+      @JsonKey(name: "genres") this.genres = const []});
 
   factory _$_Game.fromJson(Map<String, dynamic> json) => _$$_GameFromJson(json);
 
@@ -253,25 +305,22 @@ class _$_Game implements _Game {
   @override
   @JsonKey(name: "rating_top")
   final int rating_top;
-  @JsonKey(name: "ratings")
-  final List<Rating> _ratings;
   @override
   @JsonKey(name: "ratings")
-  List<Rating> get ratings {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ratings);
-  }
-
+  final List<Rating> ratings;
   @override
   @JsonKey(name: "metacritic")
   final int metacritic;
   @override
   @JsonKey(name: "reviews_count")
   final int reviews_count;
+  @override
+  @JsonKey(name: "genres")
+  final List<Genre> genres;
 
   @override
   String toString() {
-    return 'Game(id: $id, slug: $slug, name: $name, released: $released, background_image: $background_image, rating: $rating, rating_top: $rating_top, ratings: $ratings, metacritic: $metacritic, reviews_count: $reviews_count)';
+    return 'Game(id: $id, slug: $slug, name: $name, released: $released, background_image: $background_image, rating: $rating, rating_top: $rating_top, ratings: $ratings, metacritic: $metacritic, reviews_count: $reviews_count, genres: $genres)';
   }
 
   @override
@@ -279,36 +328,38 @@ class _$_Game implements _Game {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Game &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.slug, slug) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.released, released) &&
-            const DeepCollectionEquality()
-                .equals(other.background_image, background_image) &&
-            const DeepCollectionEquality().equals(other.rating, rating) &&
-            const DeepCollectionEquality()
-                .equals(other.rating_top, rating_top) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.slug, slug) || other.slug == slug) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.released, released) ||
+                other.released == released) &&
+            (identical(other.background_image, background_image) ||
+                other.background_image == background_image) &&
+            (identical(other.rating, rating) || other.rating == rating) &&
+            (identical(other.rating_top, rating_top) ||
+                other.rating_top == rating_top) &&
             const DeepCollectionEquality().equals(other.ratings, ratings) &&
-            const DeepCollectionEquality()
-                .equals(other.metacritic, metacritic) &&
-            const DeepCollectionEquality()
-                .equals(other.reviews_count, reviews_count));
+            (identical(other.metacritic, metacritic) ||
+                other.metacritic == metacritic) &&
+            (identical(other.reviews_count, reviews_count) ||
+                other.reviews_count == reviews_count) &&
+            const DeepCollectionEquality().equals(other.genres, genres));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(slug),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(released),
-      const DeepCollectionEquality().hash(background_image),
-      const DeepCollectionEquality().hash(rating),
-      const DeepCollectionEquality().hash(rating_top),
+      id,
+      slug,
+      name,
+      released,
+      background_image,
+      rating,
+      rating_top,
       const DeepCollectionEquality().hash(ratings),
-      const DeepCollectionEquality().hash(metacritic),
-      const DeepCollectionEquality().hash(reviews_count));
+      metacritic,
+      reviews_count,
+      const DeepCollectionEquality().hash(genres));
 
   @JsonKey(ignore: true)
   @override
@@ -323,49 +374,53 @@ class _$_Game implements _Game {
 
 abstract class _Game implements Game {
   factory _Game(
-      {@JsonKey(name: "id") final int id,
-      @JsonKey(name: "slug") final String slug,
-      @JsonKey(name: "name") final String name,
-      @JsonKey(name: "released") final String released,
-      @JsonKey(name: "background_image") final String background_image,
-      @JsonKey(name: "rating") final double rating,
-      @JsonKey(name: "rating_top") final int rating_top,
-      @JsonKey(name: "ratings") final List<Rating> ratings,
-      @JsonKey(name: "metacritic") final int metacritic,
-      @JsonKey(name: "reviews_count") final int reviews_count}) = _$_Game;
+      {@JsonKey(name: "id") int id,
+      @JsonKey(name: "slug") String slug,
+      @JsonKey(name: "name") String name,
+      @JsonKey(name: "released") String released,
+      @JsonKey(name: "background_image") String background_image,
+      @JsonKey(name: "rating") double rating,
+      @JsonKey(name: "rating_top") int rating_top,
+      @JsonKey(name: "ratings") List<Rating> ratings,
+      @JsonKey(name: "metacritic") int metacritic,
+      @JsonKey(name: "reviews_count") int reviews_count,
+      @JsonKey(name: "genres") List<Genre> genres}) = _$_Game;
 
   factory _Game.fromJson(Map<String, dynamic> json) = _$_Game.fromJson;
 
   @override
   @JsonKey(name: "id")
-  int get id => throw _privateConstructorUsedError;
+  int get id;
   @override
   @JsonKey(name: "slug")
-  String get slug => throw _privateConstructorUsedError;
+  String get slug;
   @override
   @JsonKey(name: "name")
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
   @JsonKey(name: "released")
-  String get released => throw _privateConstructorUsedError;
+  String get released;
   @override
   @JsonKey(name: "background_image")
-  String get background_image => throw _privateConstructorUsedError;
+  String get background_image;
   @override
   @JsonKey(name: "rating")
-  double get rating => throw _privateConstructorUsedError;
+  double get rating;
   @override
   @JsonKey(name: "rating_top")
-  int get rating_top => throw _privateConstructorUsedError;
+  int get rating_top;
   @override
   @JsonKey(name: "ratings")
-  List<Rating> get ratings => throw _privateConstructorUsedError;
+  List<Rating> get ratings;
   @override
   @JsonKey(name: "metacritic")
-  int get metacritic => throw _privateConstructorUsedError;
+  int get metacritic;
   @override
   @JsonKey(name: "reviews_count")
-  int get reviews_count => throw _privateConstructorUsedError;
+  int get reviews_count;
+  @override
+  @JsonKey(name: "genres")
+  List<Genre> get genres;
   @override
   @JsonKey(ignore: true)
   _$GameCopyWith<_Game> get copyWith => throw _privateConstructorUsedError;

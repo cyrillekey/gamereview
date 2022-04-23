@@ -20,6 +20,10 @@ _$_Game _$$_GameFromJson(Map<String, dynamic> json) => _$_Game(
           const [],
       metacritic: json['metacritic'] as int? ?? 0,
       reviews_count: json['reviews_count'] as int? ?? 0,
+      genres: (json['genres'] as List<dynamic>?)
+              ?.map((e) => Genre.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_GameToJson(_$_Game instance) => <String, dynamic>{
@@ -33,4 +37,5 @@ Map<String, dynamic> _$$_GameToJson(_$_Game instance) => <String, dynamic>{
       'ratings': instance.ratings,
       'metacritic': instance.metacritic,
       'reviews_count': instance.reviews_count,
+      'genres': instance.genres,
     };

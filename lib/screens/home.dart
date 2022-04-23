@@ -2,8 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gamereview/controllers/home_provider.dart';
+import 'package:gamereview/screens/single_game.dart';
+import 'package:gamereview/screens/view_all.dart';
 import 'package:gamereview/services/service_locator.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -78,8 +81,43 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             SizedBox(
+                              height: 20,
+                            ),
+                            SizedBox(
                               height: 10,
                             ),
+                            Container(
+                              height: 240,
+                              child: ListView.builder(
+                                  itemCount: 5,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: ((context, index) {
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Container(
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                      ),
+                                    );
+                                  })),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                            )
                           ],
                         ),
                         baseColor: Colors.grey[400]!,
@@ -105,7 +143,20 @@ class _HomeState extends State<Home> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.redAccent),
                                 ),
-                              )
+                              ),
+                              TextButton.icon(
+                                  onPressed: () {},
+                                  style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.transparent)),
+                                  icon: Icon(
+                                    Icons.search,
+                                    color: Colors.black,
+                                  ),
+                                  label: Text(
+                                    "Search",
+                                    style: TextStyle(color: Colors.black),
+                                  ))
                             ],
                           ),
                         ),
@@ -218,6 +269,12 @@ class _HomeState extends State<Home> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ViewAll()));
+                                },
                                 child: Text(
                                   "View All",
                                   style: TextStyle(
@@ -243,12 +300,13 @@ class _HomeState extends State<Home> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        // Navigator.of(context)
-                                        //     .push(MaterialPageRoute(
-                                        //         builder: ((context) => SingleGame(
-                                        //               game: games[index],
-                                        //               user: user,
-                                        //             ))));
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    SingleGame(
+                                                      game_id: provider
+                                                          .popular[index].id,
+                                                    ))));
                                       },
                                       child: Card(
                                         shape: RoundedRectangleBorder(
@@ -338,40 +396,103 @@ class _HomeState extends State<Home> {
                         SizedBox(height: 10),
                         Container(
                             child: Column(
-                          children: provider.games.sublist(0, 5).map((e) {
+                          children: provider.games.map((e) {
                             return InkWell(
                               onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => SingleGame(
-                                //               game: e,
-                                //               user: user,
-                                //             )));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SingleGame(
+                                              game_id: e.id,
+                                            )));
                               },
                               child: Card(
                                 child: Container(
-                                  height: 80,
+                                  height: 150,
                                   width: MediaQuery.of(context).size.width,
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
                                       Center(
-                                        child: Image(
-                                          height: 70,
-                                          width: 70,
-                                          image: CachedNetworkImageProvider(
-                                              e.background_image),
-                                          fit: BoxFit.cover,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Image(
+                                            height: 130,
+                                            width: 90,
+                                            image: CachedNetworkImageProvider(
+                                                e.background_image),
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                      Center(
-                                        child: Text("${e.name}"),
+                                      SizedBox(
+                                        width: 30,
                                       ),
-                                      Center(
-                                        child: Text("${e.rating} / 5.0"),
-                                      )
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
+                                        height: 130,
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.5,
+                                              child: Text(
+                                                e.name,
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Wrap(
+                                                children: e.genres.map((e) {
+                                                  return Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 4),
+                                                    child: Text(e.name),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: RatingBarIndicator(
+                                                  itemCount: 5,
+                                                  itemSize: 20,
+                                                  rating: e.rating,
+                                                  itemBuilder:
+                                                      ((context, index) {
+                                                    return Icon(
+                                                      Icons.star,
+                                                      color: Colors.amber,
+                                                    );
+                                                  })),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Icon(FontAwesome5.newspaper)
                                     ],
                                   ),
                                 ),

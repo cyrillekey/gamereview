@@ -7,6 +7,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:gamereview/controllers/auth_provider.dart';
 import 'package:gamereview/screens/emailverify.dart';
 import 'package:gamereview/screens/home_page.dart';
+import 'package:gamereview/screens/password_reset.dart';
 import 'package:gamereview/screens/signup.dart';
 import 'package:gamereview/services/service_locator.dart';
 import 'package:gamereview/utils/clip_painter.dart';
@@ -217,13 +218,21 @@ class _LoginState extends State<Login> {
                                 ])),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      alignment: Alignment.centerRight,
-                      child: const Text(
-                        'Forgot password ?',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PasswordReset()));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.centerRight,
+                        child: const Text(
+                          'Forgot password ?',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
                     Container(
@@ -308,7 +317,7 @@ class _LoginState extends State<Login> {
                         Alerts.show(context, "Error", "Something went wrong");
                       }
                     }),
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,

@@ -27,6 +27,14 @@ _$_GameDetails _$$_GameDetailsFromJson(Map<String, dynamic> json) =>
               ?.map((e) => Publisher.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      platforms: (json['platforms'] as List<dynamic>?)
+              ?.map((e) => PlatformWrapper.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      genres: (json['genres'] as List<dynamic>?)
+              ?.map((e) => Genre.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_GameDetailsToJson(_$_GameDetails instance) =>
@@ -44,4 +52,6 @@ Map<String, dynamic> _$$_GameDetailsToJson(_$_GameDetails instance) =>
       'metacritic_url': instance.metacritic_url,
       'publishers': instance.publisher,
       'developers': instance.developers,
+      'platforms': instance.platforms,
+      'genres': instance.genres,
     };

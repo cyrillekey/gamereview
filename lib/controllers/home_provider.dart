@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamereview/api_client/api_client.dart';
 import 'package:gamereview/api_client/response.dart';
 import 'package:gamereview/models/game.dart';
+import 'package:gamereview/models/game_details.dart';
 import 'package:gamereview/services/service_locator.dart';
 
 class HomeProvider with ChangeNotifier {
@@ -22,8 +23,8 @@ class HomeProvider with ChangeNotifier {
         'https://api.rawg.io/api/games?key=674f1105f61c4d639627a88e417f7a91&ordering=released');
     final result = respose.response['results'];
     games = result.map<Game>((json) => Game.fromJson(json)).toList();
-    isLoading = false;
-    notifyListeners();
+    // isLoading = false;
+    // notifyListeners();
   }
 
   Future<List<Game>?> getPopular() async {
@@ -32,9 +33,18 @@ class HomeProvider with ChangeNotifier {
     final result = respose.response['results'];
     popular = result.map<Game>((json) => Game.fromJson(json)).toList();
 
-    carousel = popular.sublist(2, 6);
+    carousel = popular.sublist(4, 12);
 
     isLoading = false;
     notifyListeners();
+  }
+
+  Future<GameDetails> getSingleGame(int id) async {
+    ApiRespose response = await _apiClient.get(
+        "https://api.rawg.io/api/games/$id?key=674f1105f61c4d639627a88e417f7a91");
+    logger.e(response.response);
+    GameDetails details = GameDetails.fromJson(response.response);
+    logger.d(details);
+    return details;
   }
 }

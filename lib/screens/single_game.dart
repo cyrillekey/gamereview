@@ -1,15 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:gamereview/models/game_body.dart';
-import 'package:gamereview/models/review_body.dart';
-import 'package:gamereview/models/user.dart';
+import 'package:gamereview/controllers/home_provider.dart';
+import 'package:gamereview/models/game.dart';
+import 'package:gamereview/models/game_details.dart';
+import 'package:gamereview/services/service_locator.dart';
+import 'package:gamereview/utils/images.dart';
+import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SingleGame extends StatefulWidget {
-  final GameBody game;
-  final User? user;
-  const SingleGame({Key? key, required this.game, required this.user})
-      : super(key: key);
+  final int game_id;
+  const SingleGame({Key? key, required this.game_id}) : super(key: key);
 
   @override
   State<SingleGame> createState() => _SingleGameState();
@@ -19,350 +23,282 @@ double reviewvalue = 1;
 bool pressed = false;
 
 class _SingleGameState extends State<SingleGame> {
-  List<Review> reviews = [];
-  final Dio dio = Dio();
-  Future loadItems() async {
-    Response response = await dio.get(
-        "https://scaletoday-heliumharbor-8080.codio-box.uk/get-reviews/${widget.game.game_id}");
-
-    var data = response.data;
-    List<Review> temp = [];
-    print(data);
-    (data["body"] as List).forEach((element) {
-      temp.add(Review.fromJson(element));
-    });
-    reviews = temp;
-    return reviews;
-  }
-
   @override
   void initState() {
     super.initState();
   }
 
+  Future<bool> loadItem() async {
+    gameDetails =
+        await Provider.of<HomeProvider>(context).getSingleGame(widget.game_id);
+    return true;
+  }
+
+  Future<void> dummy() async {}
+  late GameDetails gameDetails;
   TextEditingController review = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.game.game_name ?? "Game Name"),
-        automaticallyImplyLeading: true,
-      ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.30,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(widget.game.imageLink ?? ""),
-                        fit: BoxFit.cover)),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left: 28),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "${widget.game.game_name}",
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "${widget.game.game_rating}/5.0",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
+        child: FutureBuilder(
+            future: loadItem(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                  padding: EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(Icons.arrow_back_ios_new)),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Icon(Icons.more_horiz),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: RatingBarIndicator(
-                        itemCount: 5,
-                        itemSize: 20,
-                        rating: widget.game.game_rating ?? 1.00,
-                        itemBuilder: (context, index) {
-                          return Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      child: Row(
-                        children: [
-                          Text("${widget.game.game_publisher}"),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text("${widget.game.publish_year}"),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.grey[300],
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 28.0),
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Description",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          )),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 28.0),
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "${widget.game.game_description}",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w400),
-                          )),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 28.0),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Reviews",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    )),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              FutureBuilder(
-                  future: loadItems(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Column(
-                        children: reviews.map((e) {
-                          return Card(
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.1,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 20),
-                                    child: Center(
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                          width: 200,
-                                          child: Text("${e.user_name}")),
-                                      Container(
-                                          width: 200,
-                                          child: Text(
-                                              "User Rating: ${e.review_rating}")),
-                                      Container(
-                                          width: 200,
-                                          child: Text(
-                                              "Date Posted: ${e.review_time?.year}"))
-                                    ],
-                                  ),
-                                  RatingBarIndicator(
-                                    rating: e.review_rating ?? 4.0,
-                                    itemSize: 10,
-                                    itemBuilder: ((context, index) {
-                                      return Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                      );
-                                    }),
-                                  ),
-                                ],
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.35,
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                image: CachedNetworkImageProvider(
+                                    gameDetails.background_image),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          );
-                        }).toList(),
-                      );
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }),
-              SizedBox(
-                height: 10,
-              ),
-              widget.user != null
-                  ? Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            "Leave Review",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    gameDetails.name,
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Wrap(
+                                    children: gameDetails.genres.map((e) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 5),
+                                        child: Text(
+                                          "${e.name} .",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.45,
+                                      child: Text(
+                                        gameDetails.released,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      RatingBarIndicator(
+                                          itemSize: 15,
+                                          rating: gameDetails.rating,
+                                          itemBuilder: (context, index) {
+                                            return Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            );
+                                          }),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "${gameDetails.rating}/5.0",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Text(
+                          "Platforms",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 70,
+                        child: ListView.builder(
+                            itemCount: gameDetails.platforms.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: ((context, index) {
+                              String? name =
+                                  gameDetails.platforms[index].platform?.image;
+                              String image = "";
+                              if (name == "playstation5") {
+                                image = Images.ps5_logo;
+                              } else if (name == "playstation4") {
+                                image = Images.ps4_logo;
+                              } else if (name == "playstation3") {
+                                image = Images.ps3_logo;
+                              } else if (name == "playstation2") {
+                                image = Images.ps2_logo;
+                              } else if (name == "macos") {
+                                image = Images.mac_logo;
+                              } else if (name == "ios") {
+                                image = Images.ios_logo;
+                              } else if (name == "nintendo-switch") {
+                                image = Images.switch_logo;
+                              } else if (name == "pc") {
+                                image = Images.windows_logo;
+                              } else if (name == "xbox-one") {
+                                image = Images.xbox_one;
+                              } else if (name == "xbox-series-x") {
+                                image = Images.xbox_series;
+                              } else {
+                                image = Images.gaming;
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(image),
+                                          fit: BoxFit.fill),
+                                      borderRadius: BorderRadius.circular(10)),
+                                ),
+                              );
+                            })),
+                      ),
+                      Divider(
+                        thickness: 2,
+                      ),
+                      Divider(
+                        thickness: 2,
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.grey[300],
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 15,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 28.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Description",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 28.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    gameDetails.description,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: review,
-                            maxLines: 5,
-                            decoration: InputDecoration(
-                                labelText: "Review",
-                                hintText: "Leave Review",
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black))),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Slider(
-                            divisions: 5,
-                            value: reviewvalue,
-                            max: 5,
-                            min: 1,
-                            label: "${reviewvalue.toInt()}/5",
-                            onChanged: (value) {
-                              setState(() {
-                                reviewvalue = value;
-                              });
-                            }),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextButton(
-                          onPressed: !pressed
-                              ? () {
-                                  print(widget.user?.user_id ?? "");
-                                  setState(() {
-                                    pressed = !pressed;
-                                  });
-                                  saveReview();
-                                }
-                              : null,
-                          child: !pressed
-                              ? Text(
-                                  "Submit",
-                                  style: TextStyle(color: Colors.white),
-                                )
-                              : CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.pink),
-                              fixedSize: MaterialStateProperty.all<Size>(
-                                  Size(180, 60))),
-                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 28.0),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Reviews",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return Container(
+                height: MediaQuery.of(context).size.height,
+                child: Shimmer.fromColors(
+                    enabled: true,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          color: Colors.grey[400],
+                        )
                       ],
-                    )
-                  : SizedBox(),
-              SizedBox(
-                height: 10,
-              )
-            ],
-          ),
-        ),
+                    ),
+                    baseColor: Colors.grey[400]!,
+                    highlightColor: Colors.grey[100]!),
+              );
+            }),
       ),
     );
-  }
-
-  Future saveReview() async {
-    Dio()
-        .get(
-            "https://scaletoday-heliumharbor-8080.codio-box.uk/save-review/${widget.user!.user_id}/game-id/${widget.game.game_id}/$reviewvalue/${review.text}/")
-        .then((value) {
-      if (value.statusCode == 200) {
-        loadItems();
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  title: Text("Sucess"),
-                  content: Text("review added"),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text("Close"))
-                  ],
-                ));
-      } else {
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  title: Text("Error"),
-                  content: Text("Review failed"),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text("Close"))
-                  ],
-                ));
-      }
-      setState(() {
-        pressed = !pressed;
-      });
-    });
   }
 }

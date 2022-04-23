@@ -297,7 +297,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Alerts.show(context, "Error", "Something went wrong");
                       }
                     }),
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Login()));

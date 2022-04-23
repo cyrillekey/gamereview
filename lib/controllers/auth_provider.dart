@@ -128,4 +128,13 @@ class Authprovider with ChangeNotifier {
         return null;
     }
   }
+
+  Future<bool> resetUserPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return true;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
