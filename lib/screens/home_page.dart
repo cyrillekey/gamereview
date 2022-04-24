@@ -23,15 +23,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SlideDrawer(
       headDrawer: Container(
-        alignment: Alignment.bottomCenter,
-        height: MediaQuery.of(context).size.height,
+        alignment: Alignment.topCenter,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ListTile(
               leading: CircleAvatar(
@@ -69,9 +68,33 @@ class _HomePageState extends State<HomePage> {
       ]),
       alignment: SlideDrawerAlignment.start,
       offsetFromRight: 120,
-      contentDrawer: Container(),
+      contentDrawer: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ListTile(
+              title: Text("Home"),
+              onTap: () {
+                setState(() {
+                  index = 0;
+                });
+              },
+              leading: Icon(Icons.home),
+            ),
+            ListTile(
+              title: Text("Platforms"),
+              onTap: () {
+                setState(() {
+                  index = 1;
+                });
+              },
+              leading: Icon(Icons.videogame_asset),
+            )
+          ],
+        ),
+      ),
       child: ToggleScrren(
-        index: 0,
+        index: index,
       ),
     ));
   }

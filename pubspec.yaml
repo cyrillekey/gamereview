@@ -63,6 +63,7 @@ dependencies:
   flutter_facebook_auth: ^4.3.0
   flutter_native_splash: ^2.1.6
   twitter_login: ^4.2.2
+  paginable: ^2.0.0
   
   
   

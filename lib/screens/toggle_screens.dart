@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gamereview/models/genre.dart';
+import 'package:gamereview/models/platform.dart';
 import 'package:gamereview/screens/home.dart';
+import 'package:gamereview/screens/platforms_screen.dart';
 import 'package:slide_drawer/slide_drawer.dart';
 
 class ToggleScrren extends StatefulWidget {
@@ -15,16 +18,12 @@ class _ToggleScrrenState extends State<ToggleScrren> {
   @override
   void initState() {
     super.initState();
-    _screens = [Home()];
+    _screens = [Home(), Platforms()];
   }
 
   @override
   Widget build(BuildContext context) {
-    //SlideDrawer.of(context)?.close();
-    return Scaffold(body: _screens[widget.index]
-        // Container(
-        //     height: double.infinity,
-        //     child: Expanded(child: _screens[widget.index])),
-        );
+    SlideDrawer.of(context)?.close();
+    return Scaffold(body: _screens[widget.index]);
   }
 }

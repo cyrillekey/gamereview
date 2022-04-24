@@ -54,14 +54,14 @@ class _SingleGameState extends State<SingleGame> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            GestureDetector(
-                                onTap: () {
+                            IconButton(
+                                onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Icon(Icons.arrow_back_ios_new)),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Icon(Icons.more_horiz),
+                                icon: Icon(Icons.arrow_back_ios_new)),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.more_horiz),
                             )
                           ],
                         ),
@@ -85,6 +85,7 @@ class _SingleGameState extends State<SingleGame> {
                             Container(
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
                                     gameDetails.name,
@@ -95,19 +96,22 @@ class _SingleGameState extends State<SingleGame> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Wrap(
-                                    children: gameDetails.genres.map((e) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 5),
-                                        child: Text(
-                                          "${e.name} .",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      );
-                                    }).toList(),
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Wrap(
+                                      children: gameDetails.genres.map((e) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 5),
+                                          child: Text(
+                                            "${e.name} .",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 10,
@@ -121,28 +125,31 @@ class _SingleGameState extends State<SingleGame> {
                                             fontWeight: FontWeight.bold),
                                       )),
                                   SizedBox(
-                                    height: 10,
+                                    height: 20,
                                   ),
-                                  Row(
-                                    children: [
-                                      RatingBarIndicator(
-                                          itemSize: 15,
-                                          rating: gameDetails.rating,
-                                          itemBuilder: (context, index) {
-                                            return Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
-                                            );
-                                          }),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        "${gameDetails.rating}/5.0",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Row(
+                                      children: [
+                                        RatingBarIndicator(
+                                            itemSize: 15,
+                                            rating: gameDetails.rating,
+                                            itemBuilder: (context, index) {
+                                              return Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                              );
+                                            }),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "${gameDetails.rating}/5.0",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
@@ -173,7 +180,7 @@ class _SingleGameState extends State<SingleGame> {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: ((context, index) {
                               String? name =
-                                  gameDetails.platforms[index].platform?.image;
+                                  gameDetails.platforms[index].platform?.slug;
                               String image = "";
                               if (name == "playstation5") {
                                 image = Images.ps5_logo;
@@ -215,20 +222,93 @@ class _SingleGameState extends State<SingleGame> {
                       Divider(
                         thickness: 2,
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          InkWell(
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Icon(
+                                    Icons.favorite_outline,
+                                    size: 30,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Center(
+                                  child: Text("Add to List"),
+                                )
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Icon(Icons.trending_up),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Center(
+                                  child: Text("Track"),
+                                )
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Icon(Icons.monetization_on_outlined),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Center(
+                                  child: Text("Buy"),
+                                )
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Icon(Icons.share),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Center(
+                                  child: Text("Share"),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Divider(
                         thickness: 2,
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        color: Colors.grey[300],
                         child: Column(
                           children: [
                             SizedBox(
                               height: 15,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 28.0),
+                              padding: const EdgeInsets.only(left: 00.0),
                               child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -242,7 +322,7 @@ class _SingleGameState extends State<SingleGame> {
                               height: 15,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 28.0),
+                              padding: const EdgeInsets.only(left: 0.0),
                               child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -285,14 +365,96 @@ class _SingleGameState extends State<SingleGame> {
                 height: MediaQuery.of(context).size.height,
                 child: Shimmer.fromColors(
                     enabled: true,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.3,
-                          color: Colors.grey[400],
-                        )
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.35,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      height: 80,
+                                      color: Colors.grey,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.19,
+                                          height: 30,
+                                          color: Colors.grey,
+                                        ),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.19,
+                                          height: 30,
+                                          color: Colors.grey,
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    RatingBarIndicator(
+                                        itemSize: 20,
+                                        itemBuilder: (context, index) {
+                                          return Icon(Icons.star);
+                                        })
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              height: 30,
+                              width: 150,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
                     baseColor: Colors.grey[400]!,
                     highlightColor: Colors.grey[100]!),

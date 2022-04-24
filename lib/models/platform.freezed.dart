@@ -24,15 +24,21 @@ class _$PlatformTearOff {
   _Platform call(
       {@JsonKey(name: "id") int id = 0,
       @JsonKey(name: "name") String name = "",
-      @JsonKey(name: "slug") String image = "",
+      @JsonKey(name: "slug") String slug = "",
       @JsonKey(name: "games_count") int games_count = 0,
-      @JsonKey(name: "image_background") String image_background = ""}) {
+      @JsonKey(name: "image_background") String image_background = "",
+      @JsonKey(name: "image") String image = "",
+      @JsonKey(name: "year_start") int year_start = 0,
+      @JsonKey(name: "year_end") int year_end = 0}) {
     return _Platform(
       id: id,
       name: name,
-      image: image,
+      slug: slug,
       games_count: games_count,
       image_background: image_background,
+      image: image,
+      year_start: year_start,
+      year_end: year_end,
     );
   }
 
@@ -51,11 +57,17 @@ mixin _$Platform {
   @JsonKey(name: "name")
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: "slug")
-  String get image => throw _privateConstructorUsedError;
+  String get slug => throw _privateConstructorUsedError;
   @JsonKey(name: "games_count")
   int get games_count => throw _privateConstructorUsedError;
   @JsonKey(name: "image_background")
   String get image_background => throw _privateConstructorUsedError;
+  @JsonKey(name: "image")
+  String get image => throw _privateConstructorUsedError;
+  @JsonKey(name: "year_start")
+  int get year_start => throw _privateConstructorUsedError;
+  @JsonKey(name: "year_end")
+  int get year_end => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -70,9 +82,12 @@ abstract class $PlatformCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int id,
       @JsonKey(name: "name") String name,
-      @JsonKey(name: "slug") String image,
+      @JsonKey(name: "slug") String slug,
       @JsonKey(name: "games_count") int games_count,
-      @JsonKey(name: "image_background") String image_background});
+      @JsonKey(name: "image_background") String image_background,
+      @JsonKey(name: "image") String image,
+      @JsonKey(name: "year_start") int year_start,
+      @JsonKey(name: "year_end") int year_end});
 }
 
 /// @nodoc
@@ -87,9 +102,12 @@ class _$PlatformCopyWithImpl<$Res> implements $PlatformCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? image = freezed,
+    Object? slug = freezed,
     Object? games_count = freezed,
     Object? image_background = freezed,
+    Object? image = freezed,
+    Object? year_start = freezed,
+    Object? year_end = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -100,9 +118,9 @@ class _$PlatformCopyWithImpl<$Res> implements $PlatformCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      image: image == freezed
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      slug: slug == freezed
+          ? _value.slug
+          : slug // ignore: cast_nullable_to_non_nullable
               as String,
       games_count: games_count == freezed
           ? _value.games_count
@@ -112,6 +130,18 @@ class _$PlatformCopyWithImpl<$Res> implements $PlatformCopyWith<$Res> {
           ? _value.image_background
           : image_background // ignore: cast_nullable_to_non_nullable
               as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
+      year_start: year_start == freezed
+          ? _value.year_start
+          : year_start // ignore: cast_nullable_to_non_nullable
+              as int,
+      year_end: year_end == freezed
+          ? _value.year_end
+          : year_end // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -124,9 +154,12 @@ abstract class _$PlatformCopyWith<$Res> implements $PlatformCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "id") int id,
       @JsonKey(name: "name") String name,
-      @JsonKey(name: "slug") String image,
+      @JsonKey(name: "slug") String slug,
       @JsonKey(name: "games_count") int games_count,
-      @JsonKey(name: "image_background") String image_background});
+      @JsonKey(name: "image_background") String image_background,
+      @JsonKey(name: "image") String image,
+      @JsonKey(name: "year_start") int year_start,
+      @JsonKey(name: "year_end") int year_end});
 }
 
 /// @nodoc
@@ -142,9 +175,12 @@ class __$PlatformCopyWithImpl<$Res> extends _$PlatformCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? image = freezed,
+    Object? slug = freezed,
     Object? games_count = freezed,
     Object? image_background = freezed,
+    Object? image = freezed,
+    Object? year_start = freezed,
+    Object? year_end = freezed,
   }) {
     return _then(_Platform(
       id: id == freezed
@@ -155,9 +191,9 @@ class __$PlatformCopyWithImpl<$Res> extends _$PlatformCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      image: image == freezed
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      slug: slug == freezed
+          ? _value.slug
+          : slug // ignore: cast_nullable_to_non_nullable
               as String,
       games_count: games_count == freezed
           ? _value.games_count
@@ -167,6 +203,18 @@ class __$PlatformCopyWithImpl<$Res> extends _$PlatformCopyWithImpl<$Res>
           ? _value.image_background
           : image_background // ignore: cast_nullable_to_non_nullable
               as String,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
+      year_start: year_start == freezed
+          ? _value.year_start
+          : year_start // ignore: cast_nullable_to_non_nullable
+              as int,
+      year_end: year_end == freezed
+          ? _value.year_end
+          : year_end // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -177,9 +225,12 @@ class _$_Platform implements _Platform {
   _$_Platform(
       {@JsonKey(name: "id") this.id = 0,
       @JsonKey(name: "name") this.name = "",
-      @JsonKey(name: "slug") this.image = "",
+      @JsonKey(name: "slug") this.slug = "",
       @JsonKey(name: "games_count") this.games_count = 0,
-      @JsonKey(name: "image_background") this.image_background = ""});
+      @JsonKey(name: "image_background") this.image_background = "",
+      @JsonKey(name: "image") this.image = "",
+      @JsonKey(name: "year_start") this.year_start = 0,
+      @JsonKey(name: "year_end") this.year_end = 0});
 
   factory _$_Platform.fromJson(Map<String, dynamic> json) =>
       _$$_PlatformFromJson(json);
@@ -192,17 +243,26 @@ class _$_Platform implements _Platform {
   final String name;
   @override
   @JsonKey(name: "slug")
-  final String image;
+  final String slug;
   @override
   @JsonKey(name: "games_count")
   final int games_count;
   @override
   @JsonKey(name: "image_background")
   final String image_background;
+  @override
+  @JsonKey(name: "image")
+  final String image;
+  @override
+  @JsonKey(name: "year_start")
+  final int year_start;
+  @override
+  @JsonKey(name: "year_end")
+  final int year_end;
 
   @override
   String toString() {
-    return 'Platform(id: $id, name: $name, image: $image, games_count: $games_count, image_background: $image_background)';
+    return 'Platform(id: $id, name: $name, slug: $slug, games_count: $games_count, image_background: $image_background, image: $image, year_start: $year_start, year_end: $year_end)';
   }
 
   @override
@@ -212,16 +272,21 @@ class _$_Platform implements _Platform {
             other is _Platform &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.image, image) || other.image == image) &&
+            (identical(other.slug, slug) || other.slug == slug) &&
             (identical(other.games_count, games_count) ||
                 other.games_count == games_count) &&
             (identical(other.image_background, image_background) ||
-                other.image_background == image_background));
+                other.image_background == image_background) &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.year_start, year_start) ||
+                other.year_start == year_start) &&
+            (identical(other.year_end, year_end) ||
+                other.year_end == year_end));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, image, games_count, image_background);
+  int get hashCode => Object.hash(runtimeType, id, name, slug, games_count,
+      image_background, image, year_start, year_end);
 
   @JsonKey(ignore: true)
   @override
@@ -236,12 +301,14 @@ class _$_Platform implements _Platform {
 
 abstract class _Platform implements Platform {
   factory _Platform(
-          {@JsonKey(name: "id") int id,
-          @JsonKey(name: "name") String name,
-          @JsonKey(name: "slug") String image,
-          @JsonKey(name: "games_count") int games_count,
-          @JsonKey(name: "image_background") String image_background}) =
-      _$_Platform;
+      {@JsonKey(name: "id") int id,
+      @JsonKey(name: "name") String name,
+      @JsonKey(name: "slug") String slug,
+      @JsonKey(name: "games_count") int games_count,
+      @JsonKey(name: "image_background") String image_background,
+      @JsonKey(name: "image") String image,
+      @JsonKey(name: "year_start") int year_start,
+      @JsonKey(name: "year_end") int year_end}) = _$_Platform;
 
   factory _Platform.fromJson(Map<String, dynamic> json) = _$_Platform.fromJson;
 
@@ -253,13 +320,22 @@ abstract class _Platform implements Platform {
   String get name;
   @override
   @JsonKey(name: "slug")
-  String get image;
+  String get slug;
   @override
   @JsonKey(name: "games_count")
   int get games_count;
   @override
   @JsonKey(name: "image_background")
   String get image_background;
+  @override
+  @JsonKey(name: "image")
+  String get image;
+  @override
+  @JsonKey(name: "year_start")
+  int get year_start;
+  @override
+  @JsonKey(name: "year_end")
+  int get year_end;
   @override
   @JsonKey(ignore: true)
   _$PlatformCopyWith<_Platform> get copyWith =>

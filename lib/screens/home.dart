@@ -8,6 +8,7 @@ import 'package:gamereview/controllers/home_provider.dart';
 import 'package:gamereview/screens/single_game.dart';
 import 'package:gamereview/screens/view_all.dart';
 import 'package:gamereview/services/service_locator.dart';
+import 'package:gamereview/utils/images.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:slide_drawer/slide_drawer.dart';
@@ -134,16 +135,21 @@ class _HomeState extends State<Home> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                  "Game Review",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.redAccent),
-                                ),
-                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    SlideDrawer.of(context)?.open();
+                                  },
+                                  icon: Icon(Icons.menu)),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(left: 8.0),
+                              //   child: Text(
+                              //     "Games",
+                              //     style: TextStyle(
+                              //         fontSize: 20,
+                              //         fontWeight: FontWeight.bold,
+                              //         color: Colors.redAccent),
+                              //   ),
+                              // ),
                               TextButton.icon(
                                   onPressed: () {},
                                   style: ButtonStyle(
@@ -294,7 +300,7 @@ class _HomeState extends State<Home> {
                           width: double.infinity,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: provider.popular.length,
+                              itemCount: provider.popular.sublist(0, 5).length,
                               itemBuilder: ((context, index) {
                                 return Column(
                                   children: [
@@ -336,6 +342,9 @@ class _HomeState extends State<Home> {
                                                           provider
                                                               .popular[index]
                                                               .background_image),
+                                                  onError: (ee, e) => Image(
+                                                      image: AssetImage(
+                                                          Images.gaming)),
                                                   fit: BoxFit.cover),
                                               borderRadius:
                                                   BorderRadius.circular(10)),
@@ -420,12 +429,15 @@ class _HomeState extends State<Home> {
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          child: Image(
+                                          child: CachedNetworkImage(
                                             height: 130,
                                             width: 90,
-                                            image: CachedNetworkImageProvider(
-                                                e.background_image),
+                                            imageUrl: e.background_image,
                                             fit: BoxFit.cover,
+                                            errorWidget: (context, url, err) =>
+                                                Image(
+                                                    image: AssetImage(
+                                                        Images.gaming)),
                                           ),
                                         ),
                                       ),

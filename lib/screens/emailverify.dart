@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gamereview/controllers/auth_provider.dart';
 import 'package:gamereview/screens/home_page.dart';
+import 'package:gamereview/screens/login.dart';
 import 'package:gamereview/utils/images.dart';
 import 'package:gamereview/widgets/alerts.dart';
 import 'package:provider/provider.dart';
@@ -44,9 +46,25 @@ class _EmailVerifyState extends State<EmailVerify> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton.icon(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Login()));
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.black,
+                      ),
+                      label: Text(
+                        "Back to Login",
+                        style: TextStyle(color: Colors.black),
+                      )),
+                ),
                 Image.asset(
                   Images.email_verify,
-                  height: height * 0.55,
+                  height: height * 0.50,
                   fit: BoxFit.cover,
                 ),
                 SizedBox(height: height * 0.01),
