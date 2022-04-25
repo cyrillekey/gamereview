@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:gamereview/models/genre.dart';
 import 'package:gamereview/models/platform.dart';
 import 'package:gamereview/models/publisher.dart';
+import 'package:gamereview/models/rating.dart';
 part 'game_details.g.dart';
 part 'game_details.freezed.dart';
 
@@ -22,7 +23,11 @@ class GameDetails with _$GameDetails {
       @JsonKey(name: "publishers") @Default([]) List<Publisher> publisher,
       @JsonKey(name: "developers") @Default([]) List<Publisher> developers,
       @JsonKey(name: "platforms") @Default([]) List<PlatformWrapper> platforms,
-      @JsonKey(name: 'genres') @Default([]) List<Genre> genres}) = _GameDetails;
+      @JsonKey(name: 'genres') @Default([]) List<Genre> genres,
+      @JsonKey(name: "ratings") @Default([]) List<Rating> ratings,
+      @JsonKey(name: "reviews_count") @Default(0) int reviews_count,
+      @JsonKey(name: "ratings_count") @Default(0) int ratings_count,
+      @JsonKey(name: "clip") @Default("") String clip}) = _GameDetails;
   factory GameDetails.fromJson(Map<String, dynamic> json) =>
       _$GameDetailsFromJson(json);
 }

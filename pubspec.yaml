@@ -64,6 +64,7 @@ dependencies:
   flutter_native_splash: ^2.1.6
   twitter_login: ^4.2.2
   paginable: ^2.0.0
+  url_launcher: ^6.1.0
   
   
   

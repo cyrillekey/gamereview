@@ -10,6 +10,7 @@ import 'package:gamereview/services/service_locator.dart';
 import 'package:gamereview/utils/images.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SingleGame extends StatefulWidget {
   final int game_id;
@@ -154,6 +155,122 @@ class _SingleGameState extends State<SingleGame> {
                                 ],
                               ),
                             )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              height: 50,
+                              width: 50,
+                              child: Center(
+                                child: Text(
+                                  "${gameDetails.metacritic}",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: gameDetails.metacritic > 74
+                                    ? Colors.green
+                                    : gameDetails.metacritic > 49
+                                        ? Colors.amber
+                                        : Colors.red,
+                              )),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              launchUrl(Uri.parse(gameDetails.metacritic_url),
+                                  mode: LaunchMode.platformDefault);
+                            },
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 120,
+                                    child: Text(
+                                      "Metacritic",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 120,
+                                    child: Text(
+                                      "${gameDetails.reviews_count} User Reviews",
+                                      style: TextStyle(
+                                          color: Colors.blue,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Container(
+                            height: 50,
+                            child: VerticalDivider(
+                              width: 0,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          children: [
+                            RichText(
+                                text: TextSpan(
+                              text: "Publisher: ",
+                              children: [
+                                TextSpan(
+                                    text: gameDetails.publisher[0].name,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w400))
+                              ],
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            RichText(
+                                text: TextSpan(
+                              text: "Website: ",
+                              children: [
+                                TextSpan(
+                                    text: gameDetails.website.substring(0, 10),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w400))
+                              ],
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ))
                           ],
                         ),
                       ),

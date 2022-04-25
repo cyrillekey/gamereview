@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:gamereview/controllers/auth_provider.dart';
 import 'package:gamereview/screens/emailverify.dart';
 import 'package:gamereview/screens/home_page.dart';
 import 'package:gamereview/screens/welcome.dart';
+import 'package:provider/provider.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -27,6 +29,8 @@ class _MyAppState extends State<MyApp> {
                   ? HomePage()
                   : EmailVerify(user: snapshot.data!);
             } else {
+              Provider.of<Authprovider>(context, listen: false).user =
+                  snapshot.data;
               home = HomePage();
             }
           } else {

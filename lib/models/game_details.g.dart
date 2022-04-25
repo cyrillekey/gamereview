@@ -35,6 +35,13 @@ _$_GameDetails _$$_GameDetailsFromJson(Map<String, dynamic> json) =>
               ?.map((e) => Genre.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      ratings: (json['ratings'] as List<dynamic>?)
+              ?.map((e) => Rating.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      reviews_count: json['reviews_count'] as int? ?? 0,
+      ratings_count: json['ratings_count'] as int? ?? 0,
+      clip: json['clip'] as String? ?? "",
     );
 
 Map<String, dynamic> _$$_GameDetailsToJson(_$_GameDetails instance) =>
@@ -54,4 +61,8 @@ Map<String, dynamic> _$$_GameDetailsToJson(_$_GameDetails instance) =>
       'developers': instance.developers,
       'platforms': instance.platforms,
       'genres': instance.genres,
+      'ratings': instance.ratings,
+      'reviews_count': instance.reviews_count,
+      'ratings_count': instance.ratings_count,
+      'clip': instance.clip,
     };

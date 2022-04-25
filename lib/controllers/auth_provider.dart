@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:gamereview/screens/welcome.dart';
 import 'package:gamereview/services/service_locator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -30,6 +31,10 @@ class Authprovider with ChangeNotifier {
       notifyListeners();
       rethrow;
     }
+  }
+
+  set _user(User user) {
+    this.user = user;
   }
 
   Future<User?> loginUser(String email, String password) async {
@@ -68,6 +73,7 @@ class Authprovider with ChangeNotifier {
     await _auth.currentUser!
       ..reload();
     User user = _auth.currentUser!;
+    this.user = user;
     return user.emailVerified;
   }
 
@@ -121,6 +127,7 @@ class Authprovider with ChangeNotifier {
             accessToken: authResult.authToken!,
             secret: authResult.authTokenSecret!);
         final userCredential = await _auth.signInWithCredential(twitter);
+        user = userCredential.user;
         return userCredential.user;
       case TwitterLoginStatus.cancelledByUser:
         return null;

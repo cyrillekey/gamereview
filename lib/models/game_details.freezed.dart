@@ -36,7 +36,11 @@ class _$GameDetailsTearOff {
       @JsonKey(name: "publishers") List<Publisher> publisher = const [],
       @JsonKey(name: "developers") List<Publisher> developers = const [],
       @JsonKey(name: "platforms") List<PlatformWrapper> platforms = const [],
-      @JsonKey(name: 'genres') List<Genre> genres = const []}) {
+      @JsonKey(name: 'genres') List<Genre> genres = const [],
+      @JsonKey(name: "ratings") List<Rating> ratings = const [],
+      @JsonKey(name: "reviews_count") int reviews_count = 0,
+      @JsonKey(name: "ratings_count") int ratings_count = 0,
+      @JsonKey(name: "clip") String clip = ""}) {
     return _GameDetails(
       id: id,
       slug: slug,
@@ -53,6 +57,10 @@ class _$GameDetailsTearOff {
       developers: developers,
       platforms: platforms,
       genres: genres,
+      ratings: ratings,
+      reviews_count: reviews_count,
+      ratings_count: ratings_count,
+      clip: clip,
     );
   }
 
@@ -96,6 +104,14 @@ mixin _$GameDetails {
   List<PlatformWrapper> get platforms => throw _privateConstructorUsedError;
   @JsonKey(name: 'genres')
   List<Genre> get genres => throw _privateConstructorUsedError;
+  @JsonKey(name: "ratings")
+  List<Rating> get ratings => throw _privateConstructorUsedError;
+  @JsonKey(name: "reviews_count")
+  int get reviews_count => throw _privateConstructorUsedError;
+  @JsonKey(name: "ratings_count")
+  int get ratings_count => throw _privateConstructorUsedError;
+  @JsonKey(name: "clip")
+  String get clip => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -123,7 +139,11 @@ abstract class $GameDetailsCopyWith<$Res> {
       @JsonKey(name: "publishers") List<Publisher> publisher,
       @JsonKey(name: "developers") List<Publisher> developers,
       @JsonKey(name: "platforms") List<PlatformWrapper> platforms,
-      @JsonKey(name: 'genres') List<Genre> genres});
+      @JsonKey(name: 'genres') List<Genre> genres,
+      @JsonKey(name: "ratings") List<Rating> ratings,
+      @JsonKey(name: "reviews_count") int reviews_count,
+      @JsonKey(name: "ratings_count") int ratings_count,
+      @JsonKey(name: "clip") String clip});
 }
 
 /// @nodoc
@@ -151,6 +171,10 @@ class _$GameDetailsCopyWithImpl<$Res> implements $GameDetailsCopyWith<$Res> {
     Object? developers = freezed,
     Object? platforms = freezed,
     Object? genres = freezed,
+    Object? ratings = freezed,
+    Object? reviews_count = freezed,
+    Object? ratings_count = freezed,
+    Object? clip = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -213,6 +237,22 @@ class _$GameDetailsCopyWithImpl<$Res> implements $GameDetailsCopyWith<$Res> {
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<Genre>,
+      ratings: ratings == freezed
+          ? _value.ratings
+          : ratings // ignore: cast_nullable_to_non_nullable
+              as List<Rating>,
+      reviews_count: reviews_count == freezed
+          ? _value.reviews_count
+          : reviews_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      ratings_count: ratings_count == freezed
+          ? _value.ratings_count
+          : ratings_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      clip: clip == freezed
+          ? _value.clip
+          : clip // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -239,7 +279,11 @@ abstract class _$GameDetailsCopyWith<$Res>
       @JsonKey(name: "publishers") List<Publisher> publisher,
       @JsonKey(name: "developers") List<Publisher> developers,
       @JsonKey(name: "platforms") List<PlatformWrapper> platforms,
-      @JsonKey(name: 'genres') List<Genre> genres});
+      @JsonKey(name: 'genres') List<Genre> genres,
+      @JsonKey(name: "ratings") List<Rating> ratings,
+      @JsonKey(name: "reviews_count") int reviews_count,
+      @JsonKey(name: "ratings_count") int ratings_count,
+      @JsonKey(name: "clip") String clip});
 }
 
 /// @nodoc
@@ -269,6 +313,10 @@ class __$GameDetailsCopyWithImpl<$Res> extends _$GameDetailsCopyWithImpl<$Res>
     Object? developers = freezed,
     Object? platforms = freezed,
     Object? genres = freezed,
+    Object? ratings = freezed,
+    Object? reviews_count = freezed,
+    Object? ratings_count = freezed,
+    Object? clip = freezed,
   }) {
     return _then(_GameDetails(
       id: id == freezed
@@ -331,6 +379,22 @@ class __$GameDetailsCopyWithImpl<$Res> extends _$GameDetailsCopyWithImpl<$Res>
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
               as List<Genre>,
+      ratings: ratings == freezed
+          ? _value.ratings
+          : ratings // ignore: cast_nullable_to_non_nullable
+              as List<Rating>,
+      reviews_count: reviews_count == freezed
+          ? _value.reviews_count
+          : reviews_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      ratings_count: ratings_count == freezed
+          ? _value.ratings_count
+          : ratings_count // ignore: cast_nullable_to_non_nullable
+              as int,
+      clip: clip == freezed
+          ? _value.clip
+          : clip // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -353,7 +417,11 @@ class _$_GameDetails implements _GameDetails {
       @JsonKey(name: "publishers") this.publisher = const [],
       @JsonKey(name: "developers") this.developers = const [],
       @JsonKey(name: "platforms") this.platforms = const [],
-      @JsonKey(name: 'genres') this.genres = const []});
+      @JsonKey(name: 'genres') this.genres = const [],
+      @JsonKey(name: "ratings") this.ratings = const [],
+      @JsonKey(name: "reviews_count") this.reviews_count = 0,
+      @JsonKey(name: "ratings_count") this.ratings_count = 0,
+      @JsonKey(name: "clip") this.clip = ""});
 
   factory _$_GameDetails.fromJson(Map<String, dynamic> json) =>
       _$$_GameDetailsFromJson(json);
@@ -403,10 +471,22 @@ class _$_GameDetails implements _GameDetails {
   @override
   @JsonKey(name: 'genres')
   final List<Genre> genres;
+  @override
+  @JsonKey(name: "ratings")
+  final List<Rating> ratings;
+  @override
+  @JsonKey(name: "reviews_count")
+  final int reviews_count;
+  @override
+  @JsonKey(name: "ratings_count")
+  final int ratings_count;
+  @override
+  @JsonKey(name: "clip")
+  final String clip;
 
   @override
   String toString() {
-    return 'GameDetails(id: $id, slug: $slug, name: $name, name_original: $name_original, description: $description, metacritic: $metacritic, released: $released, background_image: $background_image, website: $website, rating: $rating, metacritic_url: $metacritic_url, publisher: $publisher, developers: $developers, platforms: $platforms, genres: $genres)';
+    return 'GameDetails(id: $id, slug: $slug, name: $name, name_original: $name_original, description: $description, metacritic: $metacritic, released: $released, background_image: $background_image, website: $website, rating: $rating, metacritic_url: $metacritic_url, publisher: $publisher, developers: $developers, platforms: $platforms, genres: $genres, ratings: $ratings, reviews_count: $reviews_count, ratings_count: $ratings_count, clip: $clip)';
   }
 
   @override
@@ -435,27 +515,38 @@ class _$_GameDetails implements _GameDetails {
             const DeepCollectionEquality()
                 .equals(other.developers, developers) &&
             const DeepCollectionEquality().equals(other.platforms, platforms) &&
-            const DeepCollectionEquality().equals(other.genres, genres));
+            const DeepCollectionEquality().equals(other.genres, genres) &&
+            const DeepCollectionEquality().equals(other.ratings, ratings) &&
+            (identical(other.reviews_count, reviews_count) ||
+                other.reviews_count == reviews_count) &&
+            (identical(other.ratings_count, ratings_count) ||
+                other.ratings_count == ratings_count) &&
+            (identical(other.clip, clip) || other.clip == clip));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      slug,
-      name,
-      name_original,
-      description,
-      metacritic,
-      released,
-      background_image,
-      website,
-      rating,
-      metacritic_url,
-      const DeepCollectionEquality().hash(publisher),
-      const DeepCollectionEquality().hash(developers),
-      const DeepCollectionEquality().hash(platforms),
-      const DeepCollectionEquality().hash(genres));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        slug,
+        name,
+        name_original,
+        description,
+        metacritic,
+        released,
+        background_image,
+        website,
+        rating,
+        metacritic_url,
+        const DeepCollectionEquality().hash(publisher),
+        const DeepCollectionEquality().hash(developers),
+        const DeepCollectionEquality().hash(platforms),
+        const DeepCollectionEquality().hash(genres),
+        const DeepCollectionEquality().hash(ratings),
+        reviews_count,
+        ratings_count,
+        clip
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -484,7 +575,11 @@ abstract class _GameDetails implements GameDetails {
       @JsonKey(name: "publishers") List<Publisher> publisher,
       @JsonKey(name: "developers") List<Publisher> developers,
       @JsonKey(name: "platforms") List<PlatformWrapper> platforms,
-      @JsonKey(name: 'genres') List<Genre> genres}) = _$_GameDetails;
+      @JsonKey(name: 'genres') List<Genre> genres,
+      @JsonKey(name: "ratings") List<Rating> ratings,
+      @JsonKey(name: "reviews_count") int reviews_count,
+      @JsonKey(name: "ratings_count") int ratings_count,
+      @JsonKey(name: "clip") String clip}) = _$_GameDetails;
 
   factory _GameDetails.fromJson(Map<String, dynamic> json) =
       _$_GameDetails.fromJson;
@@ -534,6 +629,18 @@ abstract class _GameDetails implements GameDetails {
   @override
   @JsonKey(name: 'genres')
   List<Genre> get genres;
+  @override
+  @JsonKey(name: "ratings")
+  List<Rating> get ratings;
+  @override
+  @JsonKey(name: "reviews_count")
+  int get reviews_count;
+  @override
+  @JsonKey(name: "ratings_count")
+  int get ratings_count;
+  @override
+  @JsonKey(name: "clip")
+  String get clip;
   @override
   @JsonKey(ignore: true)
   _$GameDetailsCopyWith<_GameDetails> get copyWith =>
