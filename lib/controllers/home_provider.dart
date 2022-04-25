@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:gamereview/api_client/api_client.dart';
 import 'package:gamereview/api_client/response.dart';
+import 'package:gamereview/database/local_db_dao.dart';
 import 'package:gamereview/models/game.dart';
 import 'package:gamereview/models/game_details.dart';
 import 'package:gamereview/services/service_locator.dart';
@@ -12,6 +13,8 @@ class HomeProvider with ChangeNotifier {
   List<Game> games = [];
   List<Game> popular = [];
   List<Game> carousel = [];
+  List<Game> favourites = [];
+  LocalDatabaseDao db = locator<LocalDatabaseDao>();
   int page = 1;
   loadItems() {
     getPopular();
@@ -66,5 +69,14 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
     //return games;
     logger.e(popular.length);
+  }
+
+  getFavourites() async {
+    favourites = await db.getAllFavourites();
+  }
+
+  saveFavourite(Game game) async {
+    await db.saveGame(game);
+    notifyListeners();
   }
 }

@@ -268,7 +268,7 @@ class __$GameCopyWithImpl<$Res> extends _$GameCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Game implements _Game {
+class _$_Game extends _Game {
   _$_Game(
       {@JsonKey(name: "id") this.id = 0,
       @JsonKey(name: "slug") this.slug = "",
@@ -280,7 +280,8 @@ class _$_Game implements _Game {
       @JsonKey(name: "ratings") this.ratings = const [],
       @JsonKey(name: "metacritic") this.metacritic = 0,
       @JsonKey(name: "reviews_count") this.reviews_count = 0,
-      @JsonKey(name: "genres") this.genres = const []});
+      @JsonKey(name: "genres") this.genres = const []})
+      : super._();
 
   factory _$_Game.fromJson(Map<String, dynamic> json) => _$$_GameFromJson(json);
 
@@ -372,7 +373,7 @@ class _$_Game implements _Game {
   }
 }
 
-abstract class _Game implements Game {
+abstract class _Game extends Game {
   factory _Game(
       {@JsonKey(name: "id") int id,
       @JsonKey(name: "slug") String slug,
@@ -385,6 +386,7 @@ abstract class _Game implements Game {
       @JsonKey(name: "metacritic") int metacritic,
       @JsonKey(name: "reviews_count") int reviews_count,
       @JsonKey(name: "genres") List<Genre> genres}) = _$_Game;
+  _Game._() : super._();
 
   factory _Game.fromJson(Map<String, dynamic> json) = _$_Game.fromJson;
 
