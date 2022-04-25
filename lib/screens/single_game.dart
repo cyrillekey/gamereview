@@ -247,7 +247,9 @@ class _SingleGameState extends State<SingleGame> {
                               text: "Publisher: ",
                               children: [
                                 TextSpan(
-                                    text: gameDetails.publisher[0].name,
+                                    text: gameDetails.publisher.length > 0
+                                        ? gameDetails.publisher[0].name
+                                        : "",
                                     style:
                                         TextStyle(fontWeight: FontWeight.w400))
                               ],

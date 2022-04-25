@@ -323,7 +323,10 @@ class _HomeState extends State<Home> {
                                           child: Align(
                                             alignment: Alignment.bottomLeft,
                                             child: InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                provider.saveFavourite(
+                                                    provider.popular[index]);
+                                              },
                                               child: Container(
                                                 padding: EdgeInsets.only(
                                                     bottom: 10, left: 10),
