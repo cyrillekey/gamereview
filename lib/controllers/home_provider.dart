@@ -73,6 +73,7 @@ class HomeProvider with ChangeNotifier {
 
   getFavourites() async {
     favourites = await db.getAllFavourites();
+    notifyListeners();
   }
 
   saveFavourite(Game game) async {

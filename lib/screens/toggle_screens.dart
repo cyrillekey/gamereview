@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamereview/models/genre.dart';
 import 'package:gamereview/models/platform.dart';
+import 'package:gamereview/screens/favourites.dart';
 import 'package:gamereview/screens/home.dart';
 import 'package:gamereview/screens/platforms_screen.dart';
 import 'package:slide_drawer/slide_drawer.dart';
@@ -18,7 +19,7 @@ class _ToggleScrrenState extends State<ToggleScrren> {
   @override
   void initState() {
     super.initState();
-    _screens = [Home(), Platforms()];
+    _screens = [Home(), Platforms(), Favouries()];
   }
 
   @override

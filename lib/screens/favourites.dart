@@ -1,0 +1,131 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:gamereview/controllers/home_provider.dart';
+import 'package:gamereview/models/game.dart';
+import 'package:gamereview/screens/single_game.dart';
+import 'package:gamereview/utils/images.dart';
+import 'package:provider/provider.dart';
+
+class Favouries extends StatefulWidget {
+  const Favouries({Key? key}) : super(key: key);
+
+  @override
+  State<Favouries> createState() => _FavouriesState();
+}
+
+class _FavouriesState extends State<Favouries> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<HomeProvider>(context, listen: false).getFavourites();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Consumer<HomeProvider>(builder: (context, homeProvider, child) {
+        return ListView.builder(
+            itemCount: homeProvider.favourites.length,
+            itemBuilder: (context, index) {
+              Game game = homeProvider.favourites[index];
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SingleGame(
+                                game_id: game.id,
+                              )));
+                },
+                child: Card(
+                  child: Container(
+                    height: 150,
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Center(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: CachedNetworkImage(
+                              height: 130,
+                              width: 90,
+                              imageUrl: game.background_image,
+                              errorWidget: (context, string, d) =>
+                                  Image(image: AssetImage(Images.gaming)),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          height: 130,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: Text(
+                                  game.name,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Wrap(
+                                  children: homeProvider.popular[index].genres
+                                      .map((e) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4),
+                                      child: Text(e.name),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: RatingBarIndicator(
+                                    itemCount: 5,
+                                    itemSize: 20,
+                                    rating: homeProvider.popular[index].rating,
+                                    itemBuilder: ((context, index) {
+                                      return Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      );
+                                    })),
+                              )
+                            ],
+                          ),
+                        ),
+                        Icon(Icons.favorite_outline)
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            });
+      }),
+    );
+  }
+}
