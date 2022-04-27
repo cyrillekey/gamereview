@@ -27,7 +27,11 @@ class NewsChannels extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 child: GridView.count(
                   crossAxisCount: 4,
-                  children: List.generate(25, (index) => Card()),
+                  children: List.generate(
+                      25,
+                      (index) => Card(
+                            child: Container(),
+                          )),
                 ))
           ],
         ),

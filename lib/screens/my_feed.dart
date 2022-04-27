@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamereview/screens/news_channels.dart';
+import 'package:gamereview/widgets/news_article.dart';
 import 'package:slide_drawer/slide_drawer.dart';
 
 class MyFeeds extends StatefulWidget {
@@ -48,6 +49,17 @@ class _MyFeedsState extends State<MyFeeds> {
                   }))
             ],
           ),
+        ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.75,
+          child: ListView.builder(
+              itemCount: 4,
+              itemBuilder: (context, index) => newsAricle(
+                  context,
+                  "tag",
+                  "title",
+                  "https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2016/03/fall-trees-road-1.jpg",
+                  "preview")),
         )
       ],
     );
