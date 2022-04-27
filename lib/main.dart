@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gamereview/controllers/auth_provider.dart';
+import 'package:gamereview/controllers/favourites_provider.dart';
 import 'package:gamereview/controllers/home_provider.dart';
 import 'package:gamereview/controllers/platform_provider.dart';
+import 'package:gamereview/controllers/search_provider.dart';
 import 'package:gamereview/my_app.dart';
 import 'package:gamereview/services/service_locator.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +24,9 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => HomeProvider()),
       ChangeNotifierProvider(create: (_) => Authprovider()),
-      ChangeNotifierProvider(create: (_) => PlatformProvider())
+      ChangeNotifierProvider(create: (_) => PlatformProvider()),
+      ChangeNotifierProvider(create: (_) => FavouriteProvider()),
+      ChangeNotifierProvider(create: (_) => SearchProvider())
     ],
     child: MyApp(),
   ));

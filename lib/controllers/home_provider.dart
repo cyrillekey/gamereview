@@ -13,7 +13,7 @@ class HomeProvider with ChangeNotifier {
   List<Game> games = [];
   List<Game> popular = [];
   List<Game> carousel = [];
-  List<Game> favourites = [];
+
   LocalDatabaseDao db = locator<LocalDatabaseDao>();
   int page = 1;
   loadItems() {
@@ -69,11 +69,6 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
     //return games;
     logger.e(popular.length);
-  }
-
-  getFavourites() async {
-    favourites = await db.getAllFavourites();
-    notifyListeners();
   }
 
   saveFavourite(Game game) async {

@@ -16,7 +16,17 @@ class LocalDatabaseDao extends DatabaseAccessor<AppDatabase>
     });
   }
 
+  deleteMediaFavoutire(int id) async {
+    return (delete(gameTable)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
   Future<List<Game>> getAllFavourites() async {
     return select(gameTable).get();
+  }
+
+  Future<bool> isFavourite(Game game) async {
+    var res = await (select(gameTable)..where((tbl) => tbl.id.equals(game.id)))
+        .getSingleOrNull();
+    return res != null ? true : false;
   }
 }

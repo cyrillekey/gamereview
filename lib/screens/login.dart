@@ -24,7 +24,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool busy = false;
-
+  bool visible = false;
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController = TextEditingController();
@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 TextFormField(
                                   controller: passwordController,
-                                  obscureText: true,
+                                  obscureText: visible,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Password cannot be empty';
@@ -130,7 +130,19 @@ class _LoginState extends State<Login> {
                                     }
                                     return null;
                                   },
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
+                                      suffixIcon: InkWell(
+                                          child: Icon(
+                                            visible
+                                                ? FontAwesome5.eye
+                                                : FontAwesome5.eye_slash,
+                                            color: Colors.grey,
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              visible = !visible;
+                                            });
+                                          }),
                                       border: InputBorder.none,
                                       filled: true,
                                       fillColor: Color(0xfff3f3f4)),

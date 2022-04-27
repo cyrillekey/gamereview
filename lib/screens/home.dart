@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gamereview/controllers/home_provider.dart';
+import 'package:gamereview/screens/search.dart';
 import 'package:gamereview/screens/single_game.dart';
 import 'package:gamereview/screens/view_all.dart';
 import 'package:gamereview/services/service_locator.dart';
@@ -151,7 +152,13 @@ class _HomeState extends State<Home> {
                               //   ),
                               // ),
                               TextButton.icon(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SearchScreen()));
+                                  },
                                   style: ButtonStyle(
                                       overlayColor: MaterialStateProperty.all(
                                           Colors.transparent)),

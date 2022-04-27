@@ -82,7 +82,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             menuButton(0, Icons.home_rounded, "Home"),
             menuButton(1, Icons.gamepad_outlined, "Platforms"),
-            menuButton(2, Icons.favorite_outline, "Favourites")
+            menuButton(2, Icons.favorite_outline, "Favourites"),
+            menuButton(3, Icons.newspaper, "News Feed")
           ],
         ),
       ),
