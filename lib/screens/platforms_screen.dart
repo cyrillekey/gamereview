@@ -140,6 +140,7 @@ class _PlatformsState extends State<Platforms> {
                               ),
                             )
                           : Shimmer.fromColors(
+                              enabled: true,
                               child: Card(
                                 child: Container(
                                   height: 80,

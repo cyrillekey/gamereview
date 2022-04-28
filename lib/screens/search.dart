@@ -91,6 +91,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: searchProvider.searching == true
                 ? ListView.builder(
                     itemBuilder: (context, index) => Shimmer.fromColors(
+                        enabled: true,
                         child: Card(
                           child: Container(
                             width: MediaQuery.of(context).size.width,

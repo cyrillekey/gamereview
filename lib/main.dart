@@ -6,6 +6,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gamereview/controllers/auth_provider.dart';
 import 'package:gamereview/controllers/favourites_provider.dart';
 import 'package:gamereview/controllers/home_provider.dart';
+import 'package:gamereview/controllers/news_provider.dart';
 import 'package:gamereview/controllers/platform_provider.dart';
 import 'package:gamereview/controllers/search_provider.dart';
 import 'package:gamereview/my_app.dart';
@@ -26,7 +27,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => Authprovider()),
       ChangeNotifierProvider(create: (_) => PlatformProvider()),
       ChangeNotifierProvider(create: (_) => FavouriteProvider()),
-      ChangeNotifierProvider(create: (_) => SearchProvider())
+      ChangeNotifierProvider(create: (_) => SearchProvider()),
+      ChangeNotifierProvider(create: (_) => NewsProvider())
     ],
     child: MyApp(),
   ));

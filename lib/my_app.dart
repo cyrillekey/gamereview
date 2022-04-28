@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:gamereview/controllers/auth_provider.dart';
 import 'package:gamereview/screens/emailverify.dart';
 import 'package:gamereview/screens/home_page.dart';
 import 'package:gamereview/screens/welcome.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatefulWidget {
@@ -20,6 +21,7 @@ class _MyAppState extends State<MyApp> {
   Widget home = WelcomePage();
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting();
     return StreamBuilder<User?>(
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
