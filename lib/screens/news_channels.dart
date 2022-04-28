@@ -36,7 +36,7 @@ class _NewsChannelsState extends State<NewsChannels> {
               ),
             ),
             Consumer<NewsProvider>(builder: (context, provider, child) {
-              return Container(
+              return SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: GridView.count(
