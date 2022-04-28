@@ -141,16 +141,6 @@ class _HomeState extends State<Home> {
                                     SlideDrawer.of(context)?.open();
                                   },
                                   icon: Icon(Icons.menu)),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(left: 8.0),
-                              //   child: Text(
-                              //     "Games",
-                              //     style: TextStyle(
-                              //         fontSize: 20,
-                              //         fontWeight: FontWeight.bold,
-                              //         color: Colors.redAccent),
-                              //   ),
-                              // ),
                               TextButton.icon(
                                   onPressed: () {
                                     Navigator.push(
@@ -179,6 +169,8 @@ class _HomeState extends State<Home> {
                               items: provider.carousel.map((item) {
                                 return Builder(builder: (BuildContext context) {
                                   return Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     child: Align(
                                       alignment: Alignment.bottomLeft,
                                       child: Container(

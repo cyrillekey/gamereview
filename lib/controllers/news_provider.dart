@@ -35,4 +35,14 @@ class NewsProvider with ChangeNotifier {
     notifyListeners();
     return newsArticles;
   }
+
+  Future<List<Source>> getSources() async {
+    ApiRespose response = await _apiClient.get(
+        "https://newsapi.org/v2/top-headlines/sources?apiKey=74f1ebd4692f4f3d8adb0e4674dd1ae7");
+    sources = response.response['sources']
+        .map<Source>((e) => Source.fromJson(e))
+        .toList();
+    notifyListeners();
+    return sources;
+  }
 }

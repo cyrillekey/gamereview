@@ -75,8 +75,9 @@ class _PlatformsState extends State<Platforms> {
                             child: Text("Something went wrong"),
                           ),
                       itemCount: platformProvider.platforms.length,
-                      itemBuilder: (context, index) => !platformProvider
-                              .isLoading
+                      itemBuilder: (context, index) => platformProvider
+                                  .isLoading ==
+                              false
                           ? InkWell(
                               child: Card(
                                 child: Container(

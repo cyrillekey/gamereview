@@ -14,6 +14,8 @@ class PlatformProvider with ChangeNotifier {
   }
 
   Future<List<Platform>?> getAllPlatforms() async {
+    isLoading = true;
+    notifyListeners();
     ApiRespose respose = await apiClient.get(
         "https://api.rawg.io/api/platforms?key=674f1105f61c4d639627a88e417f7a91");
     platforms = respose.response['results']

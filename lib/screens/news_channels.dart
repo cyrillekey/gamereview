@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:gamereview/controllers/news_provider.dart';
+import 'package:provider/provider.dart';
 
-class NewsChannels extends StatelessWidget {
+class NewsChannels extends StatefulWidget {
   const NewsChannels({Key? key}) : super(key: key);
+
+  @override
+  State<NewsChannels> createState() => _NewsChannelsState();
+}
+
+class _NewsChannelsState extends State<NewsChannels> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<NewsProvider>(context, listen: false).getSources();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +35,29 @@ class NewsChannels extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
+            Consumer<NewsProvider>(builder: (context, provider, child) {
+              return Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: GridView.count(
-                  crossAxisCount: 4,
-                  children: List.generate(
-                      25,
-                      (index) => Card(
-                            child: Container(),
-                          )),
-                ))
+                    crossAxisCount: 4,
+                    children: provider.sources
+                        .map((e) => Card(
+                              child: Column(
+                                children: [
+                                  Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Icon(Icons.check_circle)),
+                                  Text(
+                                    e.name,
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              ),
+                            ))
+                        .toList()),
+              );
+            })
           ],
         ),
       ),

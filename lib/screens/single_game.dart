@@ -248,38 +248,44 @@ class _SingleGameState extends State<SingleGame> {
                           alignment: Alignment.centerLeft,
                           child: Column(
                             children: [
-                              RichText(
-                                  text: TextSpan(
-                                text: "Publisher: ",
-                                children: [
-                                  TextSpan(
-                                      text: gameDetails.publisher.length > 0
-                                          ? gameDetails.publisher[0].name
-                                          : "",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400))
-                                ],
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              )),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: RichText(
+                                    text: TextSpan(
+                                  text: "Publisher: ",
+                                  children: [
+                                    TextSpan(
+                                        text: gameDetails.publisher.length > 0
+                                            ? gameDetails.publisher[0].name
+                                            : "",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400))
+                                  ],
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                              ),
                               SizedBox(
                                 height: 10,
                               ),
-                              RichText(
-                                  text: TextSpan(
-                                text: "Website: ",
-                                children: [
-                                  TextSpan(
-                                      text:
-                                          gameDetails.website.substring(0, 10),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: RichText(
+                                    textAlign: TextAlign.left,
+                                    text: TextSpan(
+                                      text: "Website: ",
+                                      children: [
+                                        TextSpan(
+                                            text: gameDetails.website,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w400))
+                                      ],
                                       style: TextStyle(
-                                          fontWeight: FontWeight.w400))
-                                ],
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ))
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              )
                             ],
                           ),
                         ),
