@@ -25,7 +25,7 @@ class _ToggleScrrenState extends State<ToggleScrren> {
 
   @override
   Widget build(BuildContext context) {
-    SlideDrawer.of(context)?.close();
+    //SlideDrawer.of(context)?.close();
     return Scaffold(body: _screens[widget.index]);
   }
 }

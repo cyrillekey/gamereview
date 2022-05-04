@@ -1,16 +1,81 @@
-# gamereview
+# Game Review
 
-A new Flutter project.
+
+Game Review is a cross platform mobile application built in [flutter](https://flutter.dev/) using dart and [Rawg Api](https://rawg.io/apidocs)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Follow these instructions to build and run the project
 
-A few resources to get you started if this is your first Flutter project:
+### Setup Flutter
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+A detailed guide for multiple platforms setup could be find [here](https://flutter.dev/docs/get-started/install/)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Setup Project
+
+- Clone this repository using `git clone https://github.com/cyrillekey/gamereview`.
+- `cd` into `gamereview`.
+- `flutter pub get` to get all the dependencies.
+- Generate files using Builder Runner (**required**) 
+```
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+
+
+### Running the app
+
+Make sure you have a connected Android/iOS device/simulator and run the following command to build and run the app in debug mode.
+
+`flutter run`
+
+### Android OAuth Config
+
+This project uses flutter version 1.20.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+
+#### Firebase Configuration
+
+- Follow these steps to setup firebase. [Firebase setup](https://firebase.google.com/docs/flutter/setup?platform=android)
+
+
+#### Google Configuration
+- Follow the following steps to set up release signing for the app.[Release Signing.](https://docs.flutter.dev/deployment/android)
+## Project Structure
+
+
+## Features
+
+### User
+
+- Authentication
+- OAuth Social Authentication
+
+### Games
+
+- Add game for review.
+- View Latest and Trending games.
+- View Game store listing.
+- Bookmark Video Game.
+- View Video Game genres.
+- View Video game Platforms
+
+### News Feed
+- Game Related news
+## Screenshots
+
+<p>
+<img src="https://user-images.githubusercontent.com/66873825/119156647-0fdb4b00-ba72-11eb-9b8f-591930ca1d85.jpg" alt="Splash View" width="200">
+
+</p>
+s
+
+
+## Contributing
+
+Whether you have some feauture requests/ideas, code improvements, refactoring, performance improvements, help is always Welcome. The more is done, better it gets.
+
+If you found any bugs, consider opening an [issue](https://github.com/cyrillekey/gamereview/issues/new).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
