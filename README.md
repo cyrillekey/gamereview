@@ -64,10 +64,18 @@ This project uses flutter version 1.20.2 and hence the support for compile time 
 ## Screenshots
 
 <p>
-<img src="https://user-images.githubusercontent.com/66873825/119156647-0fdb4b00-ba72-11eb-9b8f-591930ca1d85.jpg" alt="Splash View" width="200">
-
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_01.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_02.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_03.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_04.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_06.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_10.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_09.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_12.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_13.png?raw=true" alt="Splash View" width="200">
+<img src="https://github.com/cyrillekey/gamereview/blob/main/flutter_14.png?raw=true" alt="Splash View" width="200">
 </p>
-s
+
 
 
 ## Contributing
