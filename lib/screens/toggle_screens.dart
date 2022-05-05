@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gamereview/models/genre.dart';
-import 'package:gamereview/models/platform.dart';
+
 import 'package:gamereview/screens/favourites.dart';
 import 'package:gamereview/screens/home.dart';
 import 'package:gamereview/screens/my_feed.dart';
 import 'package:gamereview/screens/platforms_screen.dart';
-import 'package:slide_drawer/slide_drawer.dart';
 
 class ToggleScrren extends StatefulWidget {
   final int index;
