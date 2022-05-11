@@ -42,7 +42,7 @@ class ApiClient {
     try {
       var response = await dio.get(uri);
       if (response.statusCode == 200) {
-        logger.d(response.statusMessage);
+        logger.d(uri, response.statusCode);
         return ApiRespose(true, response.statusMessage,
             response: response.data);
       } else {

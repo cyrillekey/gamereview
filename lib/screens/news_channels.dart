@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamereview/controllers/news_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NewsChannels extends StatefulWidget {
   const NewsChannels({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class _NewsChannelsState extends State<NewsChannels> {
   @override
   void initState() {
     super.initState();
-    Provider.of<NewsProvider>(context, listen: false).getSources();
+    Provider.of<NewsProvider>(context, listen: false).initPage();
   }
 
   @override
@@ -39,23 +40,47 @@ class _NewsChannelsState extends State<NewsChannels> {
               return SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                child: GridView.count(
-                    crossAxisCount: 4,
-                    children: provider.sources
-                        .map((e) => Card(
-                              child: Column(
-                                children: [
-                                  Container(
-                                      alignment: Alignment.centerRight,
-                                      child: Icon(Icons.check_circle)),
-                                  Text(
-                                    e.name,
-                                    textAlign: TextAlign.center,
-                                  )
-                                ],
-                              ),
-                            ))
-                        .toList()),
+                child: provider.isSourceFinished == true
+                    ? GridView.count(
+                        crossAxisCount: 4,
+                        children: provider.sources
+                            .map((e) => InkWell(
+                                  onTap: () {
+                                    provider.addNewSource(e);
+                                  },
+                                  child: Card(
+                                    elevation: provider.isSource(e) == true
+                                        ? 10.0
+                                        : 1.0,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                            alignment: Alignment.centerRight,
+                                            child: provider.isSource(e) == true
+                                                ? Icon(Icons.check_circle)
+                                                : SizedBox()),
+                                        Text(
+                                          e.name,
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ))
+                            .toList())
+                    : GridView.count(
+                        crossAxisCount: 4,
+                        children: List.generate(
+                            40,
+                            (index) => Shimmer.fromColors(
+                                child: Card(
+                                  child: Container(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                baseColor: Colors.grey[400]!,
+                                highlightColor: Colors.grey[100]!)),
+                      ),
               );
             })
           ],

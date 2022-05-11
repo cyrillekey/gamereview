@@ -1,9 +1,10 @@
 import 'package:drift/drift.dart';
 import 'package:gamereview/models/game.dart';
+import 'package:gamereview/models/news_article_model.dart';
 export 'shared.dart';
 part 'local_db.g.dart';
 
-@DriftDatabase(tables: [GameTable])
+@DriftDatabase(tables: [GameTable, SourceTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(QueryExecutor e) : super(e);
   @override
@@ -20,6 +21,16 @@ class GameTable extends Table {
   RealColumn get rating => real()();
   IntColumn get rating_top => integer()();
   IntColumn get metacritic => integer()();
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@UseRowClass(Source)
+class SourceTable extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get description => text()();
+  TextColumn get language => text()();
   @override
   Set<Column> get primaryKey => {id};
 }

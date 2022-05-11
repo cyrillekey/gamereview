@@ -156,12 +156,13 @@ class __$SourceCopyWithImpl<$Res> extends _$SourceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Source implements _Source {
+class _$_Source extends _Source {
   _$_Source(
       {@JsonKey(name: "id") this.id = "",
       @JsonKey(name: "name") this.name = "",
       @JsonKey(name: "description") this.description = "",
-      @JsonKey(name: "language") this.language = ""});
+      @JsonKey(name: "language") this.language = ""})
+      : super._();
 
   factory _$_Source.fromJson(Map<String, dynamic> json) =>
       _$$_SourceFromJson(json);
@@ -211,12 +212,13 @@ class _$_Source implements _Source {
   }
 }
 
-abstract class _Source implements Source {
+abstract class _Source extends Source {
   factory _Source(
       {@JsonKey(name: "id") String id,
       @JsonKey(name: "name") String name,
       @JsonKey(name: "description") String description,
       @JsonKey(name: "language") String language}) = _$_Source;
+  _Source._() : super._();
 
   factory _Source.fromJson(Map<String, dynamic> json) = _$_Source.fromJson;
 

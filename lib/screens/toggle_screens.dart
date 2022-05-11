@@ -4,6 +4,7 @@ import 'package:gamereview/screens/favourites.dart';
 import 'package:gamereview/screens/home.dart';
 import 'package:gamereview/screens/my_feed.dart';
 import 'package:gamereview/screens/platforms_screen.dart';
+import 'package:gamereview/screens/user_profile.dart';
 
 class ToggleScrren extends StatefulWidget {
   final int index;
@@ -18,7 +19,7 @@ class _ToggleScrrenState extends State<ToggleScrren> {
   @override
   void initState() {
     super.initState();
-    _screens = [Home(), Platforms(), Favouries(), MyFeeds()];
+    _screens = [Home(), Platforms(), Favouries(), MyFeeds(), ProfileScreen()];
   }
 
   @override

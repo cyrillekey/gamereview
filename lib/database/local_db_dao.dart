@@ -1,10 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:gamereview/database/local_db.dart';
 import 'package:gamereview/models/game.dart';
+import 'package:gamereview/models/news_article_model.dart';
 import 'package:gamereview/services/service_locator.dart';
 part 'local_db_dao.g.dart';
 
-@DriftAccessor(tables: [GameTable])
+@DriftAccessor(tables: [GameTable, SourceTable])
 class LocalDatabaseDao extends DatabaseAccessor<AppDatabase>
     with _$LocalDatabaseDaoMixin {
   LocalDatabaseDao(AppDatabase db) : super(db);
@@ -14,6 +15,18 @@ class LocalDatabaseDao extends DatabaseAccessor<AppDatabase>
     }).catchError((error) {
       logger.e(error);
     });
+  }
+
+  Future<void> saveNewsource(Source source) async {
+    sourceTable.insert().insert(source).then((value) => logger.i(value));
+  }
+
+  unsetSource(String id) async {
+    return (delete(sourceTable)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
+  Future<List<Source>> getUserSources() async {
+    return select(sourceTable).get();
   }
 
   deleteMediaFavoutire(int id) async {
