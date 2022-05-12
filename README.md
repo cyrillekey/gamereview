@@ -29,10 +29,6 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 `flutter run`
 
-### Android OAuth Config
-
-This project uses flutter version 1.20.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
-
 #### Firebase Configuration
 
 - Follow these steps to setup firebase. [Firebase setup](https://firebase.google.com/docs/flutter/setup?platform=android)
