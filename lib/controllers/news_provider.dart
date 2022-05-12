@@ -4,6 +4,7 @@ import 'package:gamereview/api_client/response.dart';
 import 'package:gamereview/database/local_db_dao.dart';
 import 'package:gamereview/models/news_article_model.dart';
 import 'package:gamereview/services/service_locator.dart';
+import 'package:collection/collection.dart';
 
 class NewsProvider with ChangeNotifier {
   final _apiClient = locator<ApiClient>();
@@ -25,8 +26,19 @@ class NewsProvider with ChangeNotifier {
   Future<List<NewsArticleModel>> getNewsArticles() async {
     isLoading = true;
     notifyListeners();
+    getSavedSources();
+    String source_string = "";
+    int index = 0;
+    for (var element in savedSources) {
+      if (index > 0) {
+        source_string += ",${element.id}";
+      } else {
+        source_string += "${element.id}";
+      }
+      index++;
+    }
     ApiRespose respose = await _apiClient.get(
-        "https://newsapi.org/v2/everything?q=gaming&apiKey=74f1ebd4692f4f3d8adb0e4674dd1ae7");
+        "https://newsapi.org/v2/everything?q=gaming&apiKey=74f1ebd4692f4f3d8adb0e4674dd1ae7&sources=$source_string");
     newsArticles = respose.response['articles']
         .map<NewsArticleModel>((e) => NewsArticleModel.fromJson(e))
         .toList();
@@ -37,13 +49,27 @@ class NewsProvider with ChangeNotifier {
   }
 
   Future<List<NewsArticleModel>> loadMore() async {
-    ApiRespose respose = await _apiClient.get(
-        "https://newsapi.org/v2/everything?q=gaming&apiKey=74f1ebd4692f4f3d8adb0e4674dd1ae7&page=$page");
-    newsArticles += respose.response['articles']
-        .map<NewsArticleModel>((e) => NewsArticleModel.fromJson(e))
-        .toList();
-    isLoading = false;
-    page++;
+    String source_string = "";
+    int index = 0;
+    for (var element in savedSources) {
+      if (index > 0) {
+        source_string += ",${element.id}";
+      } else {
+        source_string += "${element.id}";
+      }
+      index++;
+    }
+    try {
+      ApiRespose respose = await _apiClient.get(
+          "https://newsapi.org/v2/everything?q=gaming&apiKey=74f1ebd4692f4f3d8adb0e4674dd1ae7&page=$page&sources=$source_string");
+      newsArticles += respose.response['articles']
+          .map<NewsArticleModel>((e) => NewsArticleModel.fromJson(e))
+          .toList();
+      isLoading = false;
+      page++;
+    } catch (e) {
+      rethrow;
+    }
     notifyListeners();
     return newsArticles;
   }
@@ -63,7 +89,13 @@ class NewsProvider with ChangeNotifier {
   }
 
   Future<void> addNewSource(Source source) async {
-    await db.saveNewsource(source);
+    if (isSource(source) == false) {
+      await db.saveNewsource(source);
+    } else {
+      unsetSavedSource(source);
+    }
+
+    getNewsArticles();
     notifyListeners();
   }
 
@@ -72,8 +104,9 @@ class NewsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  isSource(Source e) {
-    var present = savedSources.where((element) => element.id == e.id);
+  bool isSource(Source e) {
+    var present =
+        savedSources.firstWhereOrNull((element) => element.id == e.id);
     return present != null;
   }
 }

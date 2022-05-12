@@ -4,7 +4,7 @@ import 'package:gamereview/models/news_article_model.dart';
 export 'shared.dart';
 part 'local_db.g.dart';
 
-@DriftDatabase(tables: [GameTable, SourceTable])
+@DriftDatabase(tables: [GameTable, SourceTable, NewsTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(QueryExecutor e) : super(e);
   @override
@@ -33,4 +33,14 @@ class SourceTable extends Table {
   TextColumn get language => text()();
   @override
   Set<Column> get primaryKey => {id};
+}
+
+@UseRowClass(NewsArticleModel)
+class NewsTable extends Table {
+  TextColumn get author => text()();
+  TextColumn get title => text()();
+  TextColumn get description => text()();
+  TextColumn get url => text()();
+  TextColumn get urlToImage => text()();
+  TextColumn get publishedAt => text()();
 }

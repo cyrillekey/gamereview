@@ -17,7 +17,7 @@ class MyFeeds extends StatefulWidget {
 
 class _MyFeedsState extends State<MyFeeds> {
   List<dynamic> choices = [
-    {"text": "News feed", "value": "feed"},
+    {"text": "Saved News", "value": "feed"},
     {"text": "Channels", "value": "channel"},
   ];
   @override
@@ -78,20 +78,31 @@ class _MyFeedsState extends State<MyFeeds> {
                     enabled: true,
                     baseColor: Colors.grey[400]!,
                     highlightColor: Colors.grey[100]!)
-                : PaginableListView.builder(
-                    errorIndicatorWidget: (err, r) => Center(
-                          child: Text("Something went wrong"),
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      newsProvider.getNewsArticles();
+                    },
+                    child: PaginableListView.builder(
+                        errorIndicatorWidget: (err, r) => Center(
+                              child: Text("Something went wrong"),
+                            ),
+                        progressIndicatorWidget: Center(
+                          child: CircularProgressIndicator(),
                         ),
-                    progressIndicatorWidget: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    loadMore: newsProvider.loadMore,
-                    itemCount: newsProvider.newsArticles.length,
-                    itemBuilder: (context, index) {
-                      NewsArticleModel news = newsProvider.newsArticles[index];
-                      return newsAricle(news, context, "tag", news.title,
-                          news.urlToUmage, "preview");
-                    }),
+                        loadMore: newsProvider.loadMore,
+                        itemCount: newsProvider.newsArticles.length,
+                        itemBuilder: (context, index) {
+                          NewsArticleModel news =
+                              newsProvider.newsArticles[index];
+                          return newsAricle(
+                              news,
+                              context,
+                              "${news.source?.name}",
+                              news.title,
+                              news.urlToUmage,
+                              "preview");
+                        }),
+                  ),
           )
         ],
       );

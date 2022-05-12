@@ -30,7 +30,7 @@ Widget newsAricle(NewsArticleModel news, BuildContext context, String tag,
                       alignment: Alignment.centerLeft,
                       child: GlassmorphicContainer(
                         alignment: Alignment.centerLeft,
-                        width: 100,
+                        width: 120,
                         height: 30,
                         border: 1,
                         borderRadius: 8.0,

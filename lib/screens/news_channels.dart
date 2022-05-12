@@ -52,16 +52,26 @@ class _NewsChannelsState extends State<NewsChannels> {
                                     elevation: provider.isSource(e) == true
                                         ? 10.0
                                         : 1.0,
-                                    child: Column(
+                                    child: Stack(
                                       children: [
-                                        Container(
-                                            alignment: Alignment.centerRight,
+                                        Positioned(
+                                            top: 0,
+                                            right: 0,
                                             child: provider.isSource(e) == true
-                                                ? Icon(Icons.check_circle)
+                                                ? Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            2.0),
+                                                    child: Icon(
+                                                        Icons.check_circle),
+                                                  )
                                                 : SizedBox()),
-                                        Text(
-                                          e.name,
-                                          textAlign: TextAlign.center,
+                                        Container(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            e.name,
+                                            textAlign: TextAlign.center,
+                                          ),
                                         )
                                       ],
                                     ),

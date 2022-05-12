@@ -448,12 +448,235 @@ class $SourceTableTable extends SourceTable
   }
 }
 
+class NewsTableCompanion extends UpdateCompanion<NewsArticleModel> {
+  final Value<String> author;
+  final Value<String> title;
+  final Value<String> description;
+  final Value<String> url;
+  final Value<String> urlToImage;
+  final Value<String> publishedAt;
+  const NewsTableCompanion({
+    this.author = const Value.absent(),
+    this.title = const Value.absent(),
+    this.description = const Value.absent(),
+    this.url = const Value.absent(),
+    this.urlToImage = const Value.absent(),
+    this.publishedAt = const Value.absent(),
+  });
+  NewsTableCompanion.insert({
+    required String author,
+    required String title,
+    required String description,
+    required String url,
+    required String urlToImage,
+    required String publishedAt,
+  })  : author = Value(author),
+        title = Value(title),
+        description = Value(description),
+        url = Value(url),
+        urlToImage = Value(urlToImage),
+        publishedAt = Value(publishedAt);
+  static Insertable<NewsArticleModel> custom({
+    Expression<String>? author,
+    Expression<String>? title,
+    Expression<String>? description,
+    Expression<String>? url,
+    Expression<String>? urlToImage,
+    Expression<String>? publishedAt,
+  }) {
+    return RawValuesInsertable({
+      if (author != null) 'author': author,
+      if (title != null) 'title': title,
+      if (description != null) 'description': description,
+      if (url != null) 'url': url,
+      if (urlToImage != null) 'url_to_image': urlToImage,
+      if (publishedAt != null) 'published_at': publishedAt,
+    });
+  }
+
+  NewsTableCompanion copyWith(
+      {Value<String>? author,
+      Value<String>? title,
+      Value<String>? description,
+      Value<String>? url,
+      Value<String>? urlToImage,
+      Value<String>? publishedAt}) {
+    return NewsTableCompanion(
+      author: author ?? this.author,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      url: url ?? this.url,
+      urlToImage: urlToImage ?? this.urlToImage,
+      publishedAt: publishedAt ?? this.publishedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (author.present) {
+      map['author'] = Variable<String>(author.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (url.present) {
+      map['url'] = Variable<String>(url.value);
+    }
+    if (urlToImage.present) {
+      map['url_to_image'] = Variable<String>(urlToImage.value);
+    }
+    if (publishedAt.present) {
+      map['published_at'] = Variable<String>(publishedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NewsTableCompanion(')
+          ..write('author: $author, ')
+          ..write('title: $title, ')
+          ..write('description: $description, ')
+          ..write('url: $url, ')
+          ..write('urlToImage: $urlToImage, ')
+          ..write('publishedAt: $publishedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NewsTableTable extends NewsTable
+    with TableInfo<$NewsTableTable, NewsArticleModel> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NewsTableTable(this.attachedDatabase, [this._alias]);
+  final VerificationMeta _authorMeta = const VerificationMeta('author');
+  @override
+  late final GeneratedColumn<String?> author = GeneratedColumn<String?>(
+      'author', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
+      'title', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String?> description = GeneratedColumn<String?>(
+      'description', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
+  late final GeneratedColumn<String?> url = GeneratedColumn<String?>(
+      'url', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _urlToImageMeta = const VerificationMeta('urlToImage');
+  @override
+  late final GeneratedColumn<String?> urlToImage = GeneratedColumn<String?>(
+      'url_to_image', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _publishedAtMeta =
+      const VerificationMeta('publishedAt');
+  @override
+  late final GeneratedColumn<String?> publishedAt = GeneratedColumn<String?>(
+      'published_at', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [author, title, description, url, urlToImage, publishedAt];
+  @override
+  String get aliasedName => _alias ?? 'news_table';
+  @override
+  String get actualTableName => 'news_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<NewsArticleModel> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('author')) {
+      context.handle(_authorMeta,
+          author.isAcceptableOrUnknown(data['author']!, _authorMeta));
+    } else if (isInserting) {
+      context.missing(_authorMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('url')) {
+      context.handle(
+          _urlMeta, url.isAcceptableOrUnknown(data['url']!, _urlMeta));
+    } else if (isInserting) {
+      context.missing(_urlMeta);
+    }
+    if (data.containsKey('url_to_image')) {
+      context.handle(
+          _urlToImageMeta,
+          urlToImage.isAcceptableOrUnknown(
+              data['url_to_image']!, _urlToImageMeta));
+    } else if (isInserting) {
+      context.missing(_urlToImageMeta);
+    }
+    if (data.containsKey('published_at')) {
+      context.handle(
+          _publishedAtMeta,
+          publishedAt.isAcceptableOrUnknown(
+              data['published_at']!, _publishedAtMeta));
+    } else if (isInserting) {
+      context.missing(_publishedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  @override
+  NewsArticleModel map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NewsArticleModel(
+      author: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}author'])!,
+      title: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
+      description: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}description'])!,
+      url: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}url'])!,
+      publishedAt: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}published_at'])!,
+    );
+  }
+
+  @override
+  $NewsTableTable createAlias(String alias) {
+    return $NewsTableTable(attachedDatabase, alias);
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $GameTableTable gameTable = $GameTableTable(this);
   late final $SourceTableTable sourceTable = $SourceTableTable(this);
+  late final $NewsTableTable newsTable = $NewsTableTable(this);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [gameTable, sourceTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [gameTable, sourceTable, newsTable];
 }

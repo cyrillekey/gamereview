@@ -5,7 +5,7 @@ import 'package:gamereview/models/news_article_model.dart';
 import 'package:gamereview/services/service_locator.dart';
 part 'local_db_dao.g.dart';
 
-@DriftAccessor(tables: [GameTable, SourceTable])
+@DriftAccessor(tables: [GameTable, SourceTable, NewsTable])
 class LocalDatabaseDao extends DatabaseAccessor<AppDatabase>
     with _$LocalDatabaseDaoMixin {
   LocalDatabaseDao(AppDatabase db) : super(db);

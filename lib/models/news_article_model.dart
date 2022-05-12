@@ -26,7 +26,9 @@ class Source with _$Source implements Insertable<Source> {
 }
 
 @freezed
-class NewsArticleModel with _$NewsArticleModel {
+class NewsArticleModel
+    with _$NewsArticleModel
+    implements Insertable<NewsArticleModel> {
   factory NewsArticleModel({
     @JsonKey(name: "author") @Default(" ") String author,
     @JsonKey(name: "title") @Default(" ") String title,
@@ -39,4 +41,15 @@ class NewsArticleModel with _$NewsArticleModel {
   }) = _NewsArticleModel;
   factory NewsArticleModel.fromJson(Map<String, dynamic> json) =>
       _$NewsArticleModelFromJson(json);
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    return NewsTableCompanion(
+            author: Value(author),
+            title: Value(title),
+            description: Value(description),
+            url: Value(url),
+            urlToImage: Value(urlToUmage),
+            publishedAt: Value(publishedAt))
+        .toColumns(nullToAbsent);
+  }
 }

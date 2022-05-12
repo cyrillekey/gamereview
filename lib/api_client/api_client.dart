@@ -50,7 +50,7 @@ class ApiClient {
         return ApiRespose(false, response.statusMessage);
       }
     } catch (e) {
-      logger.e(e);
+      logger.e(uri, e);
       rethrow;
     }
   }

@@ -5,6 +5,7 @@ import 'package:gamereview/screens/home.dart';
 import 'package:gamereview/screens/my_feed.dart';
 import 'package:gamereview/screens/platforms_screen.dart';
 import 'package:gamereview/screens/user_profile.dart';
+import 'package:slide_drawer/slide_drawer.dart';
 
 class ToggleScrren extends StatefulWidget {
   final int index;
@@ -24,7 +25,7 @@ class _ToggleScrrenState extends State<ToggleScrren> {
 
   @override
   Widget build(BuildContext context) {
-    //SlideDrawer.of(context)?.close();
+    SlideDrawer.of(context)?.close();
     return Scaffold(body: _screens[widget.index]);
   }
 }
