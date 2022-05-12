@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gamereview/controllers/news_provider.dart';
 import 'package:gamereview/models/news_article_model.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ReadArticle extends StatelessWidget {
   ReadArticle(this.news);
@@ -21,6 +23,7 @@ class ReadArticle extends StatelessWidget {
                 child: Stack(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
                             onPressed: () {
@@ -29,7 +32,14 @@ class ReadArticle extends StatelessWidget {
                             icon: Icon(
                               Icons.arrow_back_ios_new,
                               color: Colors.white,
-                            ))
+                            )),
+                        IconButton(
+                            color: Colors.white,
+                            onPressed: () {
+                              Provider.of<NewsProvider>(context)
+                                  .saveArticles(news);
+                            },
+                            icon: Icon(Icons.newspaper_outlined))
                       ],
                     ),
                     Positioned(

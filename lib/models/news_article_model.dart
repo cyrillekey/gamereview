@@ -29,6 +29,7 @@ class Source with _$Source implements Insertable<Source> {
 class NewsArticleModel
     with _$NewsArticleModel
     implements Insertable<NewsArticleModel> {
+  const NewsArticleModel._();
   factory NewsArticleModel({
     @JsonKey(name: "author") @Default(" ") String author,
     @JsonKey(name: "title") @Default(" ") String title,

@@ -13,6 +13,12 @@ class FavouriteProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  saveFavourite(Game game) async {
+    db.saveGame(game);
+    getFavourites();
+    // notifyListeners();
+  }
+
   deleteFavoutire(int id) async {
     await db.deleteMediaFavoutire(id);
     getFavourites();

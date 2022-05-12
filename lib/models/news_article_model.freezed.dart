@@ -468,7 +468,7 @@ class __$NewsArticleModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_NewsArticleModel implements _NewsArticleModel {
+class _$_NewsArticleModel extends _NewsArticleModel {
   _$_NewsArticleModel(
       {@JsonKey(name: "author") this.author = " ",
       @JsonKey(name: "title") this.title = " ",
@@ -477,7 +477,8 @@ class _$_NewsArticleModel implements _NewsArticleModel {
       @JsonKey(name: "urlToImage") this.urlToUmage = "urlToImage",
       @JsonKey(name: "publishedAt") this.publishedAt = "publishedAt",
       @JsonKey(name: "content") this.content = " ",
-      this.source});
+      this.source})
+      : super._();
 
   factory _$_NewsArticleModel.fromJson(Map<String, dynamic> json) =>
       _$$_NewsArticleModelFromJson(json);
@@ -544,7 +545,7 @@ class _$_NewsArticleModel implements _NewsArticleModel {
   }
 }
 
-abstract class _NewsArticleModel implements NewsArticleModel {
+abstract class _NewsArticleModel extends NewsArticleModel {
   factory _NewsArticleModel(
       {@JsonKey(name: "author") String author,
       @JsonKey(name: "title") String title,
@@ -554,6 +555,7 @@ abstract class _NewsArticleModel implements NewsArticleModel {
       @JsonKey(name: "publishedAt") String publishedAt,
       @JsonKey(name: "content") String content,
       Source? source}) = _$_NewsArticleModel;
+  _NewsArticleModel._() : super._();
 
   factory _NewsArticleModel.fromJson(Map<String, dynamic> json) =
       _$_NewsArticleModel.fromJson;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamereview/controllers/news_provider.dart';
+import 'package:gamereview/widgets/alerts.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -47,6 +48,7 @@ class _NewsChannelsState extends State<NewsChannels> {
                             .map((e) => InkWell(
                                   onTap: () {
                                     provider.addNewSource(e);
+                                    Alerts.showSnackBar(context, "Success");
                                   },
                                   child: Card(
                                     elevation: provider.isSource(e) == true

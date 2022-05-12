@@ -25,6 +25,14 @@ class LocalDatabaseDao extends DatabaseAccessor<AppDatabase>
     return (delete(sourceTable)..where((tbl) => tbl.id.equals(id))).go();
   }
 
+  Future<List<NewsArticleModel>> getNewsArticleModel() async {
+    return select(newsTable).get();
+  }
+
+  saveNewsArticle(NewsArticleModel news) async {
+    newsTable.insert().insert(news);
+  }
+
   Future<List<Source>> getUserSources() async {
     return select(sourceTable).get();
   }

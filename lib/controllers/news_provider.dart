@@ -10,6 +10,7 @@ class NewsProvider with ChangeNotifier {
   final _apiClient = locator<ApiClient>();
   LocalDatabaseDao db = locator<LocalDatabaseDao>();
   List<NewsArticleModel> newsArticles = [];
+  List<NewsArticleModel> savedNews = [];
   List<Source> sources = [];
   List<Source> savedSources = [];
   bool isLoading = false;
@@ -26,7 +27,7 @@ class NewsProvider with ChangeNotifier {
   Future<List<NewsArticleModel>> getNewsArticles() async {
     isLoading = true;
     notifyListeners();
-    getSavedSources();
+    await getSavedSources();
     String source_string = "";
     int index = 0;
     for (var element in savedSources) {
@@ -82,6 +83,15 @@ class NewsProvider with ChangeNotifier {
         .toList();
     notifyListeners();
     return sources;
+  }
+
+  Future<void> getSavedArticles() async {
+    savedNews = await db.getNewsArticleModel();
+    notifyListeners();
+  }
+
+  saveArticles(NewsArticleModel model) async {
+    await db.saveNewsArticle(model);
   }
 
   getSavedSources() async {

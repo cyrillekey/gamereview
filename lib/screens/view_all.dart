@@ -60,7 +60,7 @@ class _ViewAllState extends State<ViewAll> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SingleGame(
-                                        game_id: homeProvider.popular[index].id,
+                                        game: homeProvider.popular[index],
                                       )));
                         },
                         child: Card(

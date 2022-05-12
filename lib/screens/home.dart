@@ -309,8 +309,8 @@ class _HomeState extends State<Home> {
                                             MaterialPageRoute(
                                                 builder: ((context) =>
                                                     SingleGame(
-                                                      game_id: provider
-                                                          .popular[index].id,
+                                                      game: provider
+                                                          .popular[index],
                                                     ))));
                                       },
                                       child: Card(
@@ -319,23 +319,6 @@ class _HomeState extends State<Home> {
                                                 Radius.circular(10))),
                                         child: Container(
                                           height: 200,
-                                          child: Align(
-                                            alignment: Alignment.bottomLeft,
-                                            child: InkWell(
-                                              onTap: () {
-                                                provider.saveFavourite(
-                                                    provider.popular[index]);
-                                              },
-                                              child: Container(
-                                                padding: EdgeInsets.only(
-                                                    bottom: 10, left: 10),
-                                                child: Icon(
-                                                  Icons.favorite,
-                                                  color: Colors.redAccent,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
                                           width: 150,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
@@ -414,7 +397,7 @@ class _HomeState extends State<Home> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => SingleGame(
-                                              game_id: e.id,
+                                              game: e,
                                             )));
                               },
                               child: Card(

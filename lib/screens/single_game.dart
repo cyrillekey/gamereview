@@ -14,8 +14,11 @@ import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SingleGame extends StatefulWidget {
-  final int game_id;
-  const SingleGame({Key? key, required this.game_id}) : super(key: key);
+  final Game game;
+  const SingleGame({
+    Key? key,
+    required this.game,
+  }) : super(key: key);
 
   @override
   State<SingleGame> createState() => _SingleGameState();
@@ -33,7 +36,7 @@ class _SingleGameState extends State<SingleGame> {
 
   Future<bool> loadItem() async {
     gameDetails =
-        await Provider.of<HomeProvider>(context).getSingleGame(widget.game_id);
+        await Provider.of<HomeProvider>(context).getSingleGame(widget.game.id);
     return true;
   }
 
@@ -363,8 +366,13 @@ class _SingleGameState extends State<SingleGame> {
                           children: [
                             InkWell(
                               onTap: () {
-                                favouriteProvider
-                                    .deleteFavoutire(gameDetails.id);
+                                if (favouriteProvider
+                                    .isFavourite(gameDetails)) {
+                                  favouriteProvider
+                                      .deleteFavoutire(gameDetails.id);
+                                } else {
+                                  favouriteProvider.saveFavourite(widget.game);
+                                }
                               },
                               child: Column(
                                 children: [
@@ -486,7 +494,7 @@ class _SingleGameState extends State<SingleGame> {
                           height: 20,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 28.0),
+                          padding: const EdgeInsets.only(left: 0.0),
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
@@ -495,12 +503,31 @@ class _SingleGameState extends State<SingleGame> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               )),
                         ),
+                        Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView.builder(
+                                itemCount: gameDetails.ratings.length,
+                                itemBuilder: (context, index) => Card(
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.1,
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              height: 10,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ))),
                         SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        Container(
+                          height: 140,
+                        )
                       ],
                     ),
                   );
@@ -598,6 +625,7 @@ class _SingleGameState extends State<SingleGame> {
                           SizedBox(
                             height: 10,
                           ),
+                          Container(child: TextField())
                         ],
                       ),
                     ),

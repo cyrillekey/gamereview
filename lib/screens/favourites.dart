@@ -59,7 +59,7 @@ class _FavouriesState extends State<Favouries> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SingleGame(
-                                      game_id: game.id,
+                                      game: game,
                                     )));
                       },
                       child: Card(
