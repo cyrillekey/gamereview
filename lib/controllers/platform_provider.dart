@@ -11,6 +11,7 @@ class PlatformProvider with ChangeNotifier {
   int page = 1;
   loadItems() {
     getAllPlatforms();
+    isLoading = false;
   }
 
   Future<List<Platform>?> getAllPlatforms() async {

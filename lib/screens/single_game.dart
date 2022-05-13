@@ -5,6 +5,7 @@ import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gamereview/controllers/favourites_provider.dart';
 import 'package:gamereview/controllers/home_provider.dart';
+import 'package:gamereview/controllers/review_provider.dart';
 import 'package:gamereview/models/game.dart';
 import 'package:gamereview/models/game_details.dart';
 import 'package:gamereview/services/service_locator.dart';
@@ -24,9 +25,6 @@ class SingleGame extends StatefulWidget {
   State<SingleGame> createState() => _SingleGameState();
 }
 
-double reviewvalue = 1;
-bool pressed = false;
-
 class _SingleGameState extends State<SingleGame> {
   @override
   void initState() {
@@ -40,6 +38,7 @@ class _SingleGameState extends State<SingleGame> {
     return true;
   }
 
+  final TextEditingController reviewController = TextEditingController();
   Future<void> dummy() async {}
   late GameDetails gameDetails;
   TextEditingController review = TextEditingController();
@@ -522,12 +521,31 @@ class _SingleGameState extends State<SingleGame> {
                                         ),
                                       ),
                                     ))),
-                        SizedBox(
-                          height: 20,
-                        ),
                         Container(
-                          height: 140,
-                        )
+                            child: TextField(
+                          controller: reviewController,
+                          maxLines: 5,
+                          decoration: InputDecoration(
+                              labelText: "Review",
+                              hintText: "Write Review...",
+                              border: OutlineInputBorder()),
+                        )),
+                        TextButton(
+                            onPressed: () {
+                              Provider.of<ReviewProvider>(context,
+                                      listen: false)
+                                  .saveReview(widget.game.id.toString(), {
+                                "title": "testing",
+                                "review": reviewController.text.trim(),
+                                "rating": 4,
+                                "user": {
+                                  "name": "testing",
+                                  "email": "testing@mail.com",
+                                  "avatar": "plas.m"
+                                }
+                              });
+                            },
+                            child: Text("Send"))
                       ],
                     ),
                   );
@@ -625,7 +643,6 @@ class _SingleGameState extends State<SingleGame> {
                           SizedBox(
                             height: 10,
                           ),
-                          Container(child: TextField())
                         ],
                       ),
                     ),

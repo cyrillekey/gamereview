@@ -64,95 +64,118 @@ class _PlatformsState extends State<Platforms> {
               ),
               Consumer<PlatformProvider>(
                   builder: (context, platformProvider, child) {
-                return Container(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: PaginableListView.builder(
-                      loadMore: platformProvider.loadMore,
-                      progressIndicatorWidget: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      errorIndicatorWidget: (err, r) => Center(
-                            child: Text("Something went wrong"),
-                          ),
-                      itemCount: platformProvider.platforms.length,
-                      itemBuilder: (context, index) => platformProvider
-                                  .isLoading ==
-                              false
-                          ? InkWell(
-                              child: Card(
-                                child: Container(
-                                  height: 80,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 10,
+                return platformProvider.isLoading == true
+                    ? Container(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: ListView.builder(
+                            itemBuilder: ((context, index) =>
+                                Shimmer.fromColors(
+                                    child: Card(
+                                      child: Container(
+                                        height: 80,
+                                        color: Colors.grey,
                                       ),
-                                      Center(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: Image(
-                                            height: 60,
-                                            width: 60,
-                                            image: CachedNetworkImageProvider(
-                                                platformProvider
-                                                    .platforms[index]
-                                                    .image_background),
-                                            fit: BoxFit.cover,
-                                          ),
+                                    ),
+                                    baseColor: Colors.grey[700]!,
+                                    highlightColor: Colors.grey[400]!))),
+                      )
+                    : Container(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: PaginableListView.builder(
+                            loadMore: platformProvider.loadMore,
+                            progressIndicatorWidget: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorIndicatorWidget: (err, r) => Center(
+                                  child: Text("Something went wrong"),
+                                ),
+                            itemCount: platformProvider.platforms.length,
+                            itemBuilder: (context, index) => platformProvider
+                                        .isLoading ==
+                                    false
+                                ? InkWell(
+                                    child: Card(
+                                      child: Container(
+                                        height: 80,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Center(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image(
+                                                  height: 60,
+                                                  width: 60,
+                                                  image:
+                                                      CachedNetworkImageProvider(
+                                                          platformProvider
+                                                              .platforms[index]
+                                                              .image_background),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.1,
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.25,
+                                              child: Text(platformProvider
+                                                  .platforms[index].name),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
+                                            ),
+                                            IconButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PlatformDetails(
+                                                                platform:
+                                                                    platformProvider
+                                                                            .platforms[
+                                                                        index],
+                                                              )));
+                                                },
+                                                icon: Icon(
+                                                    Icons.arrow_forward_ios))
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.1,
+                                    ),
+                                  )
+                                : Shimmer.fromColors(
+                                    enabled: true,
+                                    child: Card(
+                                      child: Container(
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
                                       ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.25,
-                                        child: Text(platformProvider
-                                            .platforms[index].name),
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.2,
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        PlatformDetails(
-                                                          platform:
-                                                              platformProvider
-                                                                      .platforms[
-                                                                  index],
-                                                        )));
-                                          },
-                                          icon: Icon(Icons.arrow_forward_ios))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Shimmer.fromColors(
-                              enabled: true,
-                              child: Card(
-                                child: Container(
-                                  height: 80,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(10)),
-                                ),
-                              ),
-                              baseColor: Colors.grey[400]!,
-                              highlightColor: Colors.grey[100]!)),
-                );
+                                    ),
+                                    baseColor: Colors.grey[400]!,
+                                    highlightColor: Colors.grey[100]!)),
+                      );
               })
             ],
           ),
