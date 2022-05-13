@@ -28,7 +28,7 @@ class WelcomePage extends StatelessWidget {
               textAlign: TextAlign.center,
               text: const TextSpan(children: [
                 TextSpan(
-                    text: "Your one Stop place for everything gamming",
+                    text: "Your one Stop place for everything gaming",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
