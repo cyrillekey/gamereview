@@ -81,7 +81,7 @@ class WelcomePage extends StatelessWidget {
               ),
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.white),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  shape: MaterialStateProperty.all(const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                       side: BorderSide(color: Colors.black)))),
             ),
