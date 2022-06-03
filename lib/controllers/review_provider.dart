@@ -17,7 +17,13 @@ class ReviewProvider with ChangeNotifier {
 
   Future<void> getAllReviews() async {
     try {
-      var snapshot = await _firestore.doc("game_id").get();
+      var snapshot = await _firestore.collection("game_id").get();
+      reviews = snapshot.docs.map((e) {
+        var data = e.data() as Map<String, dynamic>;
+        data['id'] = e.reference.id;
+        Review review = Review.fromJson(data);
+        return review;
+      }).toList();
     } catch (e) {}
   }
 }

@@ -1,14 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gamereview/controllers/favourites_provider.dart';
 import 'package:gamereview/controllers/home_provider.dart';
 import 'package:gamereview/controllers/review_provider.dart';
 import 'package:gamereview/models/game.dart';
 import 'package:gamereview/models/game_details.dart';
-import 'package:gamereview/services/service_locator.dart';
+import 'package:gamereview/utils/get_platform_logo.dart';
 import 'package:gamereview/utils/images.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -315,30 +313,8 @@ class _SingleGameState extends State<SingleGame> {
                               itemBuilder: ((context, index) {
                                 String? name =
                                     gameDetails.platforms[index].platform?.slug;
-                                String image = "";
-                                if (name == "playstation5") {
-                                  image = Images.ps5_logo;
-                                } else if (name == "playstation4") {
-                                  image = Images.ps4_logo;
-                                } else if (name == "playstation3") {
-                                  image = Images.ps3_logo;
-                                } else if (name == "playstation2") {
-                                  image = Images.ps2_logo;
-                                } else if (name == "macos") {
-                                  image = Images.mac_logo;
-                                } else if (name == "ios") {
-                                  image = Images.ios_logo;
-                                } else if (name == "nintendo-switch") {
-                                  image = Images.switch_logo;
-                                } else if (name == "pc") {
-                                  image = Images.windows_logo;
-                                } else if (name == "xbox-one") {
-                                  image = Images.xbox_one;
-                                } else if (name == "xbox-series-x") {
-                                  image = Images.xbox_series;
-                                } else {
-                                  image = Images.gaming;
-                                }
+                                String image = getPlatformImage(name!);
+
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
