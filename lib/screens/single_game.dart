@@ -28,6 +28,8 @@ class _SingleGameState extends State<SingleGame> {
   void initState() {
     super.initState();
     Provider.of<FavouriteProvider>(context, listen: false).getFavourites();
+    Provider.of<ReviewProvider>(context, listen: false)
+        .getAllReviews(widget.game.id);
   }
 
   Future<bool> loadItem() async {
@@ -478,25 +480,29 @@ class _SingleGameState extends State<SingleGame> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               )),
                         ),
-                        Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView.builder(
-                                itemCount: gameDetails.ratings.length,
-                                itemBuilder: (context, index) => Card(
-                                      child: Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.1,
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              height: 10,
-                                            )
-                                          ],
+                        Consumer<ReviewProvider>(
+                            builder: (context, reviewProvider, child) {
+                          return SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                  itemCount: reviewProvider.reviews.length,
+                                  itemBuilder: (context, index) => Card(
+                                        child: SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.1,
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 10,
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ))),
+                                      )));
+                        }),
                         Container(
                             child: TextField(
                           controller: reviewController,
